@@ -50,15 +50,11 @@ function hk_search_views_default_views() {
   $handler->display->display_options['style_options']['default_marker']['default_marker_color'] = 'Icon_House';
   $handler->display->display_options['style_options']['center_option'] = '0';
   $handler->display->display_options['style_options']['tooltips']['marker_tooltip'] = 'field_object_ref_title_field';
-  $handler->display->display_options['style_options']['sync']['2'] = 0;
-  $handler->display->display_options['style_options']['sync']['4'] = 0;
-  $handler->display->display_options['style_options']['sync']['8'] = 0;
   $handler->display->display_options['style_options']['full_screen'] = 0;
   $handler->display->display_options['style_options']['scale_metric'] = 1;
   $handler->display->display_options['style_options']['scale_imperial'] = 0;
   $handler->display->display_options['style_options']['zoom_indicator'] = 0;
   $handler->display->display_options['style_options']['map_reset'] = 0;
-  $handler->display->display_options['style_options']['map_cluster_toggle'] = 0;
   $handler->display->display_options['style_options']['mini_map']['on'] = 0;
   $handler->display->display_options['style_options']['mini_map']['height'] = '100';
   $handler->display->display_options['style_options']['mini_map']['width'] = '150';
@@ -207,6 +203,22 @@ function hk_search_views_default_views() {
   $handler->display->display_options['fields']['field_object_ref_title_field']['label'] = '';
   $handler->display->display_options['fields']['field_object_ref_title_field']['exclude'] = TRUE;
   $handler->display->display_options['fields']['field_object_ref_title_field']['element_label_colon'] = FALSE;
+  /* Field: Object » Standort: LatLong Pair (indexed) */
+  $handler->display->display_options['fields']['field_object_ref_field_objekt_wkt_latlon']['id'] = 'field_object_ref_field_objekt_wkt_latlon';
+  $handler->display->display_options['fields']['field_object_ref_field_objekt_wkt_latlon']['table'] = 'search_api_index_solr_node_index';
+  $handler->display->display_options['fields']['field_object_ref_field_objekt_wkt_latlon']['field'] = 'field_object_ref_field_objekt_wkt_latlon';
+  $handler->display->display_options['fields']['field_object_ref_field_objekt_wkt_latlon']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['field_object_ref_field_objekt_wkt_latlon']['link_to_entity'] = 0;
+  $handler->display->display_options['fields']['field_object_ref_field_objekt_wkt_latlon']['conversion_factor'] = '1';
+  $handler->display->display_options['fields']['field_object_ref_field_objekt_wkt_latlon']['precision'] = '0';
+  /* Field: Standort: LatLong Pair (indexed) */
+  $handler->display->display_options['fields']['field_objekt_wkt_latlon']['id'] = 'field_objekt_wkt_latlon';
+  $handler->display->display_options['fields']['field_objekt_wkt_latlon']['table'] = 'search_api_index_solr_node_index';
+  $handler->display->display_options['fields']['field_objekt_wkt_latlon']['field'] = 'field_objekt_wkt_latlon';
+  $handler->display->display_options['fields']['field_objekt_wkt_latlon']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['field_objekt_wkt_latlon']['link_to_entity'] = 0;
+  $handler->display->display_options['fields']['field_objekt_wkt_latlon']['conversion_factor'] = '1';
+  $handler->display->display_options['fields']['field_objekt_wkt_latlon']['precision'] = '0';
   /* Field: Indexed Node: Standort */
   $handler->display->display_options['fields']['field_objekt_wkt']['id'] = 'field_objekt_wkt';
   $handler->display->display_options['fields']['field_objekt_wkt']['table'] = 'search_api_index_solr_node_index';
@@ -218,16 +230,6 @@ function hk_search_views_default_views() {
   $handler->display->display_options['fields']['field_objekt_wkt']['settings'] = array(
     'data' => 'full',
   );
-  /* Field: Indexed Node: Category */
-  $handler->display->display_options['fields']['field_kategorie']['id'] = 'field_kategorie';
-  $handler->display->display_options['fields']['field_kategorie']['table'] = 'search_api_index_solr_node_index';
-  $handler->display->display_options['fields']['field_kategorie']['field'] = 'field_kategorie';
-  $handler->display->display_options['fields']['field_kategorie']['label'] = '';
-  $handler->display->display_options['fields']['field_kategorie']['exclude'] = TRUE;
-  $handler->display->display_options['fields']['field_kategorie']['element_label_colon'] = FALSE;
-  $handler->display->display_options['fields']['field_kategorie']['link_to_entity'] = 1;
-  $handler->display->display_options['fields']['field_kategorie']['view_mode'] = 'full';
-  $handler->display->display_options['fields']['field_kategorie']['bypass_access'] = 0;
   /* Filter criterion: Indexed Node: Content type */
   $handler->display->display_options['filters']['type']['id'] = 'type';
   $handler->display->display_options['filters']['type']['table'] = 'search_api_index_solr_node_index';
@@ -393,20 +395,6 @@ function hk_search_views_default_views() {
       'operator' => '>=',
       'value' => '1000000',
     ),
-  );
-  /* Filter criterion: Indexed Node: Save Workflow */
-  $handler->display->display_options['filters']['field_save_workflow']['id'] = 'field_save_workflow';
-  $handler->display->display_options['filters']['field_save_workflow']['table'] = 'search_api_index_solr_node_index';
-  $handler->display->display_options['filters']['field_save_workflow']['field'] = 'field_save_workflow';
-  $handler->display->display_options['filters']['field_save_workflow']['value'] = array(
-    4 => '4',
-  );
-  /* Filter criterion: Object: Save Workflow (indexed) */
-  $handler->display->display_options['filters']['field_object_ref_field_save_workflow']['id'] = 'field_object_ref_field_save_workflow';
-  $handler->display->display_options['filters']['field_object_ref_field_save_workflow']['table'] = 'search_api_index_solr_node_index';
-  $handler->display->display_options['filters']['field_object_ref_field_save_workflow']['field'] = 'field_object_ref_field_save_workflow';
-  $handler->display->display_options['filters']['field_object_ref_field_save_workflow']['value'] = array(
-    4 => '4',
   );
   $handler->display->display_options['use_ajax_flags'] = array(
     'merken' => 'merken',
