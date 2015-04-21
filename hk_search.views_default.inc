@@ -50,11 +50,16 @@ function hk_search_views_default_views() {
   $handler->display->display_options['style_options']['default_marker']['default_marker_color'] = 'Icon_House';
   $handler->display->display_options['style_options']['center_option'] = '0';
   $handler->display->display_options['style_options']['tooltips']['marker_tooltip'] = 'field_object_ref_title_field';
+  $handler->display->display_options['style_options']['sync']['2'] = 0;
+  $handler->display->display_options['style_options']['sync']['4'] = 0;
+  $handler->display->display_options['style_options']['sync']['8'] = 1;
+  $handler->display->display_options['style_options']['sync']['16'] = 1;
   $handler->display->display_options['style_options']['full_screen'] = 0;
   $handler->display->display_options['style_options']['scale_metric'] = 1;
   $handler->display->display_options['style_options']['scale_imperial'] = 0;
   $handler->display->display_options['style_options']['zoom_indicator'] = 0;
   $handler->display->display_options['style_options']['map_reset'] = 0;
+  $handler->display->display_options['style_options']['map_cluster_toggle'] = 0;
   $handler->display->display_options['style_options']['mini_map']['on'] = 0;
   $handler->display->display_options['style_options']['mini_map']['height'] = '100';
   $handler->display->display_options['style_options']['mini_map']['width'] = '150';
@@ -78,6 +83,7 @@ function hk_search_views_default_views() {
   $handler->display->display_options['style_options']['map_options']['zoom'] = '12';
   $handler->display->display_options['style_options']['map_options']['scrollwheelzoom'] = '1';
   $handler->display->display_options['style_options']['map_options']['dragging'] = '1';
+  $handler->display->display_options['style_options']['map_options']['separator'] = '';
   /* No results behavior: Global: Text area */
   $handler->display->display_options['empty']['area']['id'] = 'area';
   $handler->display->display_options['empty']['area']['table'] = 'views';
@@ -130,7 +136,7 @@ function hk_search_views_default_views() {
   $handler->display->display_options['fields']['field_object_ref_field_bezirk']['label'] = '';
   $handler->display->display_options['fields']['field_object_ref_field_bezirk']['exclude'] = TRUE;
   $handler->display->display_options['fields']['field_object_ref_field_bezirk']['alter']['alter_text'] = TRUE;
-  $handler->display->display_options['fields']['field_object_ref_field_bezirk']['alter']['text'] = '<div class="wo"><i class="fa fa-map-marker"></i> [field_object_ref_field_address_thoroughfare], [field_object_ref_field_bezirk]</div>';
+  $handler->display->display_options['fields']['field_object_ref_field_bezirk']['alter']['text'] = '<div class="wo"><i class="icon-hk-icon-location"></i> [field_object_ref_field_address_thoroughfare], [field_object_ref_field_bezirk]</div>';
   $handler->display->display_options['fields']['field_object_ref_field_bezirk']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['field_object_ref_field_bezirk']['element_default_classes'] = FALSE;
   $handler->display->display_options['fields']['field_object_ref_field_bezirk']['link_to_entity'] = 0;
@@ -144,7 +150,8 @@ function hk_search_views_default_views() {
   $handler->display->display_options['fields']['rendered_entity']['label'] = '';
   $handler->display->display_options['fields']['rendered_entity']['alter']['alter_text'] = TRUE;
   $handler->display->display_options['fields']['rendered_entity']['alter']['text'] = '[rendered_entity]
-[field_object_ref_field_bezirk]';
+[field_object_ref_field_bezirk]
+<div class="tablehead"><span class="id">Objekt ID</span><span class="rooms">Zimmer</span><span class="space">Fläche</span><span class="price">Preis</span><span class="more">&nbsp;</span></div>';
   $handler->display->display_options['fields']['rendered_entity']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['rendered_entity']['element_default_classes'] = FALSE;
   $handler->display->display_options['fields']['rendered_entity']['link_to_entity'] = 0;
@@ -178,14 +185,22 @@ function hk_search_views_default_views() {
     'scale' => '2',
     'prefix_suffix' => 1,
   );
-  /* Field: Indexed Node: Purchasing price */
+  /* Field: Apartment Header Rewrite (Object Title) */
+  $handler->display->display_options['fields']['field_object_ref_title_field']['id'] = 'field_object_ref_title_field';
+  $handler->display->display_options['fields']['field_object_ref_title_field']['table'] = 'search_api_index_solr_node_index';
+  $handler->display->display_options['fields']['field_object_ref_title_field']['field'] = 'field_object_ref_title_field';
+  $handler->display->display_options['fields']['field_object_ref_title_field']['ui_name'] = 'Apartment Header Rewrite (Object Title)';
+  $handler->display->display_options['fields']['field_object_ref_title_field']['label'] = '';
+  $handler->display->display_options['fields']['field_object_ref_title_field']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['field_object_ref_title_field']['element_label_colon'] = FALSE;
+  /* Field: Apartment Rewrite (Purchasing price) */
   $handler->display->display_options['fields']['field_apart_price']['id'] = 'field_apart_price';
   $handler->display->display_options['fields']['field_apart_price']['table'] = 'search_api_index_solr_node_index';
   $handler->display->display_options['fields']['field_apart_price']['field'] = 'field_apart_price';
+  $handler->display->display_options['fields']['field_apart_price']['ui_name'] = 'Apartment Rewrite (Purchasing price)';
   $handler->display->display_options['fields']['field_apart_price']['label'] = '';
   $handler->display->display_options['fields']['field_apart_price']['alter']['alter_text'] = TRUE;
-  $handler->display->display_options['fields']['field_apart_price']['alter']['text'] = '<tr><td>[field_object_ref_field_objektid_nunumeric]-[field_apart_no] </td><td> [field_apart_rooms] </td><td> [field_apart_living_space] </td><td> [field_apart_price]</td></tr>';
-  $handler->display->display_options['fields']['field_apart_price']['alter']['make_link'] = TRUE;
+  $handler->display->display_options['fields']['field_apart_price']['alter']['text'] = '<a class="apart" href="/node/[nid]"><span class="id">[field_object_ref_field_objektid_nunumeric]-[field_apart_no]</span><span class="rooms">[field_apart_rooms]</span><span class="space">[field_apart_living_space]</span><span class="price">[field_apart_price]</span><span class="more">Details</span></a>';
   $handler->display->display_options['fields']['field_apart_price']['alter']['path'] = 'node/[nid]';
   $handler->display->display_options['fields']['field_apart_price']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['field_apart_price']['element_default_classes'] = FALSE;
@@ -196,29 +211,6 @@ function hk_search_views_default_views() {
     'scale' => '0',
     'prefix_suffix' => 1,
   );
-  /* Field: Object: Titel (indexed) */
-  $handler->display->display_options['fields']['field_object_ref_title_field']['id'] = 'field_object_ref_title_field';
-  $handler->display->display_options['fields']['field_object_ref_title_field']['table'] = 'search_api_index_solr_node_index';
-  $handler->display->display_options['fields']['field_object_ref_title_field']['field'] = 'field_object_ref_title_field';
-  $handler->display->display_options['fields']['field_object_ref_title_field']['label'] = '';
-  $handler->display->display_options['fields']['field_object_ref_title_field']['exclude'] = TRUE;
-  $handler->display->display_options['fields']['field_object_ref_title_field']['element_label_colon'] = FALSE;
-  /* Field: Object » Standort: LatLong Pair (indexed) */
-  $handler->display->display_options['fields']['field_object_ref_field_objekt_wkt_latlon']['id'] = 'field_object_ref_field_objekt_wkt_latlon';
-  $handler->display->display_options['fields']['field_object_ref_field_objekt_wkt_latlon']['table'] = 'search_api_index_solr_node_index';
-  $handler->display->display_options['fields']['field_object_ref_field_objekt_wkt_latlon']['field'] = 'field_object_ref_field_objekt_wkt_latlon';
-  $handler->display->display_options['fields']['field_object_ref_field_objekt_wkt_latlon']['exclude'] = TRUE;
-  $handler->display->display_options['fields']['field_object_ref_field_objekt_wkt_latlon']['link_to_entity'] = 0;
-  $handler->display->display_options['fields']['field_object_ref_field_objekt_wkt_latlon']['conversion_factor'] = '1';
-  $handler->display->display_options['fields']['field_object_ref_field_objekt_wkt_latlon']['precision'] = '0';
-  /* Field: Standort: LatLong Pair (indexed) */
-  $handler->display->display_options['fields']['field_objekt_wkt_latlon']['id'] = 'field_objekt_wkt_latlon';
-  $handler->display->display_options['fields']['field_objekt_wkt_latlon']['table'] = 'search_api_index_solr_node_index';
-  $handler->display->display_options['fields']['field_objekt_wkt_latlon']['field'] = 'field_objekt_wkt_latlon';
-  $handler->display->display_options['fields']['field_objekt_wkt_latlon']['exclude'] = TRUE;
-  $handler->display->display_options['fields']['field_objekt_wkt_latlon']['link_to_entity'] = 0;
-  $handler->display->display_options['fields']['field_objekt_wkt_latlon']['conversion_factor'] = '1';
-  $handler->display->display_options['fields']['field_objekt_wkt_latlon']['precision'] = '0';
   /* Field: Indexed Node: Standort */
   $handler->display->display_options['fields']['field_objekt_wkt']['id'] = 'field_objekt_wkt';
   $handler->display->display_options['fields']['field_objekt_wkt']['table'] = 'search_api_index_solr_node_index';
