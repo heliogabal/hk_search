@@ -155,7 +155,8 @@ function hk_search_default_search_api_index() {
             "highlight" : "always"
           }
         }
-      }
+      },
+      "additional fields" : { "field_object_ref:field_bezirk" : "field_object_ref:field_bezirk" }
     },
     "enabled" : "1",
     "read_only" : "0"
