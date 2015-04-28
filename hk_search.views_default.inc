@@ -42,7 +42,7 @@ function hk_search_views_default_views() {
   $handler->display->display_options['style_options']['grouping'] = array(
     0 => array(
       'field' => 'rendered_entity',
-      'rendered' => 1,
+      'rendered' => 0,
       'rendered_strip' => 0,
     ),
   );
@@ -54,22 +54,8 @@ function hk_search_views_default_views() {
   $handler->display->display_options['style_options']['ip_geoloc_views_plugin_longitude'] = '';
   $handler->display->display_options['style_options']['default_marker']['default_marker_color'] = 'Icon_House';
   $handler->display->display_options['style_options']['center_option'] = '0';
-  $handler->display->display_options['style_options']['tooltips']['marker_tooltip'] = 'field_object_ref_title_field';
-  $handler->display->display_options['style_options']['sync']['2'] = 0;
-  $handler->display->display_options['style_options']['sync']['4'] = 0;
-  $handler->display->display_options['style_options']['sync']['8'] = 1;
-  $handler->display->display_options['style_options']['sync']['16'] = 1;
-  $handler->display->display_options['style_options']['full_screen'] = 0;
+  $handler->display->display_options['style_options']['tooltips']['marker_tooltip'] = 'title_field';
   $handler->display->display_options['style_options']['scale_metric'] = 1;
-  $handler->display->display_options['style_options']['scale_imperial'] = 0;
-  $handler->display->display_options['style_options']['zoom_indicator'] = 1;
-  $handler->display->display_options['style_options']['map_reset'] = 0;
-  $handler->display->display_options['style_options']['map_cluster_toggle'] = 0;
-  $handler->display->display_options['style_options']['mini_map']['on'] = 0;
-  $handler->display->display_options['style_options']['mini_map']['height'] = '100';
-  $handler->display->display_options['style_options']['mini_map']['width'] = '150';
-  $handler->display->display_options['style_options']['mini_map']['toggle'] = 1;
-  $handler->display->display_options['style_options']['mini_map']['zoom_delta'] = '-5';
   $handler->display->display_options['style_options']['cluster_radius'] = '25';
   $handler->display->display_options['style_options']['cluster_differentiator']['cluster_differentiator_fields'] = array(
     'field_object_ref_field_bezirk' => 'field_object_ref_field_bezirk',
@@ -233,6 +219,7 @@ function hk_search_views_default_views() {
   $handler->display->display_options['filters']['type']['table'] = 'search_api_index_solr_node_index';
   $handler->display->display_options['filters']['type']['field'] = 'type';
   $handler->display->display_options['filters']['type']['value'] = array(
+    'objekt' => 'objekt',
     'apartment' => 'apartment',
   );
   $handler->display->display_options['filters']['type']['group'] = 1;

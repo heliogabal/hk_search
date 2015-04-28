@@ -35,7 +35,7 @@ function hk_search_default_search_api_index() {
     "name" : "Solr Node Index",
     "machine_name" : "solr_node_index",
     "description" : null,
-    "server" : "solr",
+    "server" : "db_search",
     "item_type" : "node",
     "options" : {
       "index_directly" : 1,
@@ -68,13 +68,11 @@ function hk_search_default_search_api_index() {
         "field_object_ref:field_object_images:file:size" : { "type" : "list\\u003Cinteger\\u003E" },
         "field_object_ref:field_object_images:file:type" : { "type" : "list\\u003Cstring\\u003E" },
         "field_object_ref:field_object_images:file:url" : { "type" : "list\\u003Ctext\\u003E" },
-        "field_object_ref:field_objekt_wkt:latlon" : { "type" : "string", "real_type" : "location" },
+        "field_object_ref:field_objekt_wkt:latlon" : { "type" : "text" },
         "field_object_ref:field_objektid_nunumeric" : { "type" : "text" },
-        "field_object_ref:field_save_workflow" : { "type" : "string" },
         "field_object_ref:status" : { "type" : "integer" },
         "field_object_ref:title_field" : { "type" : "text" },
-        "field_objekt_wkt:latlon" : { "type" : "string", "real_type" : "location" },
-        "field_save_workflow" : { "type" : "string" },
+        "field_objekt_wkt:latlon" : { "type" : "text" },
         "is_new" : { "type" : "boolean" },
         "language" : { "type" : "string" },
         "search_api_language" : { "type" : "string" },
@@ -155,8 +153,7 @@ function hk_search_default_search_api_index() {
             "highlight" : "always"
           }
         }
-      },
-      "additional fields" : { "field_object_ref:field_bezirk" : "field_object_ref:field_bezirk" }
+      }
     },
     "enabled" : "1",
     "read_only" : "0"
@@ -194,7 +191,7 @@ function hk_search_default_search_api_server() {
       "autocorrect_spell" : 1,
       "autocorrect_suggest_words" : 1
     },
-    "enabled" : "1"
+    "enabled" : "0"
   }');
   return $items;
 }
