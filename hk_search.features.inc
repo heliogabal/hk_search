@@ -482,7 +482,7 @@ function hk_search_default_search_api_server() {
       "autocorrect_spell" : 1,
       "autocorrect_suggest_words" : 1
     },
-    "enabled" : "1"
+    "enabled" : "0"
   }');
   return $items;
 }
