@@ -92,7 +92,7 @@ function hk_search_views_default_views() {
   $handler->display->display_options['fields']['nid']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['nid']['separator'] = '';
   $handler->display->display_options['fields']['nid']['link_to_entity'] = 0;
-  /* Field: Object: Objekt ID (indexed) */
+  /* Field: Object: Object ID (indexed) */
   $handler->display->display_options['fields']['field_object_ref_field_objektid_nunumeric']['id'] = 'field_object_ref_field_objektid_nunumeric';
   $handler->display->display_options['fields']['field_object_ref_field_objektid_nunumeric']['table'] = 'search_api_index_solr_node_index';
   $handler->display->display_options['fields']['field_object_ref_field_objektid_nunumeric']['field'] = 'field_object_ref_field_objektid_nunumeric';

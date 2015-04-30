@@ -457,32 +457,5 @@ function hk_search_default_search_api_server() {
     },
     "enabled" : "1"
   }');
-  $items['solr'] = entity_import('search_api_server', '{
-    "name" : "Solr",
-    "machine_name" : "solr",
-    "description" : "",
-    "class" : "search_api_solr_service",
-    "options" : {
-      "clean_ids_form" : [],
-      "clean_ids" : false,
-      "site_hash_form" : [],
-      "site_hash" : false,
-      "scheme" : "http",
-      "host" : "localhost",
-      "port" : "8099",
-      "path" : "\\/solr\\/d41d8cd98f00b204e9800998ecf8427e.hk.new.drupalforgood.eu.o5571260507",
-      "http_user" : "",
-      "http_pass" : "",
-      "excerpt" : 1,
-      "retrieve_data" : 0,
-      "highlight_data" : 0,
-      "skip_schema_check" : 0,
-      "solr_version" : "",
-      "http_method" : "AUTO",
-      "autocorrect_spell" : 1,
-      "autocorrect_suggest_words" : 1
-    },
-    "enabled" : "0"
-  }');
   return $items;
 }
