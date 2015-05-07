@@ -12,8 +12,8 @@ function hk_search_views_default_views() {
 
   $view = new view();
   $view->name = 'karten';
-  $view->description = '';
-  $view->tag = 'default';
+  $view->description = 'Hauptview mit Karten für Startseite, Hintergrund und Suche für Kaufen und Mieten';
+  $view->tag = 'hk';
   $view->base_table = 'search_api_index_solr_node_index';
   $view->human_name = 'Karten';
   $view->core = 7;
@@ -24,7 +24,11 @@ function hk_search_views_default_views() {
   $handler = $view->new_display('default', 'Master', 'default');
   $handler->display->display_options['use_more_always'] = FALSE;
   $handler->display->display_options['access']['type'] = 'none';
-  $handler->display->display_options['cache']['type'] = 'none-accelerated';
+  $handler->display->display_options['cache']['type'] = 'search_api_views_cache';
+  $handler->display->display_options['cache']['results_lifespan'] = '3600';
+  $handler->display->display_options['cache']['results_lifespan_custom'] = '0';
+  $handler->display->display_options['cache']['output_lifespan'] = '3600';
+  $handler->display->display_options['cache']['output_lifespan_custom'] = '0';
   $handler->display->display_options['query']['type'] = 'views_query';
   $handler->display->display_options['query']['options']['search_api_bypass_access'] = 0;
   $handler->display->display_options['query']['options']['entity_access'] = 0;
@@ -36,8 +40,8 @@ function hk_search_views_default_views() {
   $handler->display->display_options['style_plugin'] = 'ip_geoloc_leaflet';
   $handler->display->display_options['style_options']['grouping'] = array(
     0 => array(
-      'field' => 'rendered_entity',
-      'rendered' => 0,
+      'field' => 'field_object_ref_field_object_txt_map_popup_value',
+      'rendered' => 1,
       'rendered_strip' => 0,
     ),
   );
@@ -49,23 +53,30 @@ function hk_search_views_default_views() {
   $handler->display->display_options['style_options']['ip_geoloc_views_plugin_longitude'] = '';
   $handler->display->display_options['style_options']['default_marker']['default_marker_color'] = 'Icon_House';
   $handler->display->display_options['style_options']['center_option'] = '0';
-  $handler->display->display_options['style_options']['tooltips']['marker_tooltip'] = 'title_field';
+  $handler->display->display_options['style_options']['tooltips']['marker_tooltip'] = 'field_object_ref_title_field';
+  $handler->display->display_options['style_options']['sync']['2'] = 0;
+  $handler->display->display_options['style_options']['sync']['4'] = 0;
+  $handler->display->display_options['style_options']['sync']['8'] = 1;
+  $handler->display->display_options['style_options']['sync']['16'] = 1;
+  $handler->display->display_options['style_options']['full_screen'] = 0;
   $handler->display->display_options['style_options']['scale_metric'] = 1;
+  $handler->display->display_options['style_options']['scale_imperial'] = 0;
+  $handler->display->display_options['style_options']['zoom_indicator'] = 0;
+  $handler->display->display_options['style_options']['map_reset'] = 0;
+  $handler->display->display_options['style_options']['map_cluster_toggle'] = 0;
+  $handler->display->display_options['style_options']['mini_map']['on'] = 0;
+  $handler->display->display_options['style_options']['mini_map']['height'] = '100';
+  $handler->display->display_options['style_options']['mini_map']['width'] = '150';
+  $handler->display->display_options['style_options']['mini_map']['toggle'] = 1;
+  $handler->display->display_options['style_options']['mini_map']['zoom_delta'] = '-5';
   $handler->display->display_options['style_options']['cluster_radius'] = '25';
-  $handler->display->display_options['style_options']['cluster_differentiator']['cluster_differentiator_fields'] = array(
-    'field_object_ref_field_bezirk' => 'field_object_ref_field_bezirk',
-  );
-  $handler->display->display_options['style_options']['cluster_differentiator']['zoom_ranges'] = array(
-    1 => '',
-  );
-  $handler->display->display_options['style_options']['cluster_differentiator']['cluster_tooltips'] = 1;
-  $handler->display->display_options['style_options']['cluster_differentiator']['cluster_outline'] = '1';
+  $handler->display->display_options['style_options']['cluster_differentiator']['cluster_differentiator_fields'] = array();
   $handler->display->display_options['style_options']['cluster_aggregation']['aggregation_function'] = 'average';
   $handler->display->display_options['style_options']['cluster_aggregation']['ranges']['small'] = '10';
   $handler->display->display_options['style_options']['cluster_aggregation']['ranges']['medium'] = '100';
   $handler->display->display_options['style_options']['cluster_aggregation']['ranges']['large'] = '1000';
   $handler->display->display_options['style_options']['empty_map_center'] = '52.541143, 13.414810';
-  $handler->display->display_options['style_options']['map_options']['maxzoom'] = '19';
+  $handler->display->display_options['style_options']['map_options']['maxzoom'] = '18';
   $handler->display->display_options['style_options']['map_options']['zoom'] = '12';
   $handler->display->display_options['style_options']['map_options']['scrollwheelzoom'] = '1';
   $handler->display->display_options['style_options']['map_options']['dragging'] = '1';
@@ -77,21 +88,11 @@ function hk_search_views_default_views() {
   $handler->display->display_options['empty']['area']['label'] = 'We\'re awefully sorry';
   $handler->display->display_options['empty']['area']['empty'] = TRUE;
   $handler->display->display_options['empty']['area']['content'] = 'No results matched your search. Please contact us so that we can help you to find what you are looking for. We always have more offers than we can put on this website, so give it a try and call us!';
-  $handler->display->display_options['empty']['area']['format'] = 'filtered_html';
+  $handler->display->display_options['empty']['area']['format'] = 'full_html';
   /* Relationship: Indexed Node: Object */
   $handler->display->display_options['relationships']['field_object_ref']['id'] = 'field_object_ref';
   $handler->display->display_options['relationships']['field_object_ref']['table'] = 'search_api_index_solr_node_index';
   $handler->display->display_options['relationships']['field_object_ref']['field'] = 'field_object_ref';
-  $handler->display->display_options['relationships']['field_object_ref']['label'] = 'Objekt';
-  /* Field: Indexed Node: Node ID */
-  $handler->display->display_options['fields']['nid']['id'] = 'nid';
-  $handler->display->display_options['fields']['nid']['table'] = 'search_api_index_solr_node_index';
-  $handler->display->display_options['fields']['nid']['field'] = 'nid';
-  $handler->display->display_options['fields']['nid']['label'] = '';
-  $handler->display->display_options['fields']['nid']['exclude'] = TRUE;
-  $handler->display->display_options['fields']['nid']['element_label_colon'] = FALSE;
-  $handler->display->display_options['fields']['nid']['separator'] = '';
-  $handler->display->display_options['fields']['nid']['link_to_entity'] = 0;
   /* Field: Object: Object ID (indexed) */
   $handler->display->display_options['fields']['field_object_ref_field_objektid_nunumeric']['id'] = 'field_object_ref_field_objektid_nunumeric';
   $handler->display->display_options['fields']['field_object_ref_field_objektid_nunumeric']['table'] = 'search_api_index_solr_node_index';
@@ -99,13 +100,28 @@ function hk_search_views_default_views() {
   $handler->display->display_options['fields']['field_object_ref_field_objektid_nunumeric']['label'] = '';
   $handler->display->display_options['fields']['field_object_ref_field_objektid_nunumeric']['exclude'] = TRUE;
   $handler->display->display_options['fields']['field_object_ref_field_objektid_nunumeric']['element_label_colon'] = FALSE;
-  /* Field: Indexed Node: Apartment No. */
-  $handler->display->display_options['fields']['field_apart_no']['id'] = 'field_apart_no';
-  $handler->display->display_options['fields']['field_apart_no']['table'] = 'search_api_index_solr_node_index';
-  $handler->display->display_options['fields']['field_apart_no']['field'] = 'field_apart_no';
-  $handler->display->display_options['fields']['field_apart_no']['label'] = '';
-  $handler->display->display_options['fields']['field_apart_no']['exclude'] = TRUE;
-  $handler->display->display_options['fields']['field_apart_no']['element_label_colon'] = FALSE;
+  /* Field: Object: Titel (indexed) */
+  $handler->display->display_options['fields']['field_object_ref_title_field']['id'] = 'field_object_ref_title_field';
+  $handler->display->display_options['fields']['field_object_ref_title_field']['table'] = 'search_api_index_solr_node_index';
+  $handler->display->display_options['fields']['field_object_ref_title_field']['field'] = 'field_object_ref_title_field';
+  $handler->display->display_options['fields']['field_object_ref_title_field']['label'] = '';
+  $handler->display->display_options['fields']['field_object_ref_title_field']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['field_object_ref_title_field']['element_label_colon'] = FALSE;
+  /* Field: Node: Object images */
+  $handler->display->display_options['fields']['field_object_images']['id'] = 'field_object_images';
+  $handler->display->display_options['fields']['field_object_images']['table'] = 'entity_node';
+  $handler->display->display_options['fields']['field_object_images']['field'] = 'field_object_images';
+  $handler->display->display_options['fields']['field_object_images']['relationship'] = 'field_object_ref';
+  $handler->display->display_options['fields']['field_object_images']['label'] = '';
+  $handler->display->display_options['fields']['field_object_images']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['field_object_images']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['field_object_images']['click_sort_column'] = 'fid';
+  $handler->display->display_options['fields']['field_object_images']['settings'] = array(
+    'image_style' => 'map-popup',
+    'image_link' => 'content',
+  );
+  $handler->display->display_options['fields']['field_object_images']['delta_limit'] = '1';
+  $handler->display->display_options['fields']['field_object_images']['delta_offset'] = '0';
   /* Field: Object » Address: Thoroughfare (i.e. Street address) (indexed) */
   $handler->display->display_options['fields']['field_object_ref_field_address_thoroughfare']['id'] = 'field_object_ref_field_address_thoroughfare';
   $handler->display->display_options['fields']['field_object_ref_field_address_thoroughfare']['table'] = 'search_api_index_solr_node_index';
@@ -115,46 +131,50 @@ function hk_search_views_default_views() {
   $handler->display->display_options['fields']['field_object_ref_field_address_thoroughfare']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['field_object_ref_field_address_thoroughfare']['element_default_classes'] = FALSE;
   $handler->display->display_options['fields']['field_object_ref_field_address_thoroughfare']['link_to_entity'] = 0;
-  /* Field: Object: Borough (indexed) */
-  $handler->display->display_options['fields']['field_object_ref_field_bezirk']['id'] = 'field_object_ref_field_bezirk';
-  $handler->display->display_options['fields']['field_object_ref_field_bezirk']['table'] = 'search_api_index_solr_node_index';
-  $handler->display->display_options['fields']['field_object_ref_field_bezirk']['field'] = 'field_object_ref_field_bezirk';
-  $handler->display->display_options['fields']['field_object_ref_field_bezirk']['label'] = '';
-  $handler->display->display_options['fields']['field_object_ref_field_bezirk']['exclude'] = TRUE;
-  $handler->display->display_options['fields']['field_object_ref_field_bezirk']['alter']['alter_text'] = TRUE;
-  $handler->display->display_options['fields']['field_object_ref_field_bezirk']['alter']['text'] = '<div class="wo"><i class="icon-hk-icon-location"></i> [field_object_ref_field_address_thoroughfare], [field_object_ref_field_bezirk]</div>';
-  $handler->display->display_options['fields']['field_object_ref_field_bezirk']['element_label_colon'] = FALSE;
-  $handler->display->display_options['fields']['field_object_ref_field_bezirk']['element_default_classes'] = FALSE;
-  $handler->display->display_options['fields']['field_object_ref_field_bezirk']['link_to_entity'] = 0;
-  $handler->display->display_options['fields']['field_object_ref_field_bezirk']['view_mode'] = 'full';
-  $handler->display->display_options['fields']['field_object_ref_field_bezirk']['bypass_access'] = 0;
-  /* Field: Content: Rendered Node */
-  $handler->display->display_options['fields']['rendered_entity']['id'] = 'rendered_entity';
-  $handler->display->display_options['fields']['rendered_entity']['table'] = 'views_entity_node';
-  $handler->display->display_options['fields']['rendered_entity']['field'] = 'rendered_entity';
-  $handler->display->display_options['fields']['rendered_entity']['relationship'] = 'field_object_ref';
-  $handler->display->display_options['fields']['rendered_entity']['label'] = '';
-  $handler->display->display_options['fields']['rendered_entity']['alter']['alter_text'] = TRUE;
-  $handler->display->display_options['fields']['rendered_entity']['alter']['text'] = '[rendered_entity]
-[field_object_ref_field_bezirk]
+  /* Field: Indexed Node: Borough */
+  $handler->display->display_options['fields']['field_bezirk']['id'] = 'field_bezirk';
+  $handler->display->display_options['fields']['field_bezirk']['table'] = 'search_api_index_solr_node_index';
+  $handler->display->display_options['fields']['field_bezirk']['field'] = 'field_bezirk';
+  $handler->display->display_options['fields']['field_bezirk']['label'] = '';
+  $handler->display->display_options['fields']['field_bezirk']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['field_bezirk']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['field_bezirk']['link_to_entity'] = 0;
+  $handler->display->display_options['fields']['field_bezirk']['view_mode'] = 'full';
+  $handler->display->display_options['fields']['field_bezirk']['bypass_access'] = 0;
+  /* Field: Object » Text Karten-Popup: Text (indexed) */
+  $handler->display->display_options['fields']['field_object_ref_field_object_txt_map_popup_value']['id'] = 'field_object_ref_field_object_txt_map_popup_value';
+  $handler->display->display_options['fields']['field_object_ref_field_object_txt_map_popup_value']['table'] = 'search_api_index_solr_node_index';
+  $handler->display->display_options['fields']['field_object_ref_field_object_txt_map_popup_value']['field'] = 'field_object_ref_field_object_txt_map_popup_value';
+  $handler->display->display_options['fields']['field_object_ref_field_object_txt_map_popup_value']['label'] = '';
+  $handler->display->display_options['fields']['field_object_ref_field_object_txt_map_popup_value']['alter']['alter_text'] = TRUE;
+  $handler->display->display_options['fields']['field_object_ref_field_object_txt_map_popup_value']['alter']['text'] = '[field_object_images]
+<h2>[field_object_ref_title_field]</h2>
+<p>[field_object_ref_field_object_txt_map_popup_value]</p>
+<div class="wo"><i class="icon-hk-icon-location"></i>[field_object_ref_field_address_thoroughfare], [field_bezirk]</div>
 <div class="tablehead"><span class="id">Objekt ID</span><span class="rooms">Zimmer</span><span class="space">Fläche</span><span class="price">Preis</span><span class="more">&nbsp;</span></div>';
-  $handler->display->display_options['fields']['rendered_entity']['element_label_colon'] = FALSE;
-  $handler->display->display_options['fields']['rendered_entity']['element_default_classes'] = FALSE;
-  $handler->display->display_options['fields']['rendered_entity']['link_to_entity'] = 0;
-  $handler->display->display_options['fields']['rendered_entity']['display'] = 'view';
-  $handler->display->display_options['fields']['rendered_entity']['view_mode'] = 'map_popup';
-  $handler->display->display_options['fields']['rendered_entity']['bypass_access'] = 0;
-  /* Field: Indexed Node: Titel */
-  $handler->display->display_options['fields']['title_field']['id'] = 'title_field';
-  $handler->display->display_options['fields']['title_field']['table'] = 'search_api_index_solr_node_index';
-  $handler->display->display_options['fields']['title_field']['field'] = 'title_field';
-  $handler->display->display_options['fields']['title_field']['label'] = '';
-  $handler->display->display_options['fields']['title_field']['exclude'] = TRUE;
-  $handler->display->display_options['fields']['title_field']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['field_object_ref_field_object_txt_map_popup_value']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['field_object_ref_field_object_txt_map_popup_value']['link_to_entity'] = 0;
+  /* Field: Indexed Node: Node ID */
+  $handler->display->display_options['fields']['nid']['id'] = 'nid';
+  $handler->display->display_options['fields']['nid']['table'] = 'search_api_index_solr_node_index';
+  $handler->display->display_options['fields']['nid']['field'] = 'nid';
+  $handler->display->display_options['fields']['nid']['label'] = '';
+  $handler->display->display_options['fields']['nid']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['nid']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['nid']['separator'] = '';
+  $handler->display->display_options['fields']['nid']['link_to_entity'] = 0;
+  /* Field: Indexed Node: Apartment No. */
+  $handler->display->display_options['fields']['field_apart_no']['id'] = 'field_apart_no';
+  $handler->display->display_options['fields']['field_apart_no']['table'] = 'search_api_index_solr_node_index';
+  $handler->display->display_options['fields']['field_apart_no']['field'] = 'field_apart_no';
+  $handler->display->display_options['fields']['field_apart_no']['label'] = '';
+  $handler->display->display_options['fields']['field_apart_no']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['field_apart_no']['element_label_colon'] = FALSE;
   /* Field: Indexed Node: Rooms */
   $handler->display->display_options['fields']['field_apart_rooms']['id'] = 'field_apart_rooms';
   $handler->display->display_options['fields']['field_apart_rooms']['table'] = 'search_api_index_solr_node_index';
   $handler->display->display_options['fields']['field_apart_rooms']['field'] = 'field_apart_rooms';
+  $handler->display->display_options['fields']['field_apart_rooms']['label'] = 'Zimmer';
   $handler->display->display_options['fields']['field_apart_rooms']['exclude'] = TRUE;
   $handler->display->display_options['fields']['field_apart_rooms']['settings'] = array(
     'thousand_separator' => ' ',
@@ -164,36 +184,31 @@ function hk_search_views_default_views() {
   $handler->display->display_options['fields']['field_apart_living_space']['id'] = 'field_apart_living_space';
   $handler->display->display_options['fields']['field_apart_living_space']['table'] = 'search_api_index_solr_node_index';
   $handler->display->display_options['fields']['field_apart_living_space']['field'] = 'field_apart_living_space';
+  $handler->display->display_options['fields']['field_apart_living_space']['label'] = 'Fläche';
   $handler->display->display_options['fields']['field_apart_living_space']['exclude'] = TRUE;
   $handler->display->display_options['fields']['field_apart_living_space']['settings'] = array(
     'thousand_separator' => ' ',
-    'decimal_separator' => '.',
-    'scale' => '2',
+    'decimal_separator' => ',',
+    'scale' => '0',
     'prefix_suffix' => 1,
   );
-  /* Field: Apartment Header Rewrite (Object Title) */
-  $handler->display->display_options['fields']['field_object_ref_title_field']['id'] = 'field_object_ref_title_field';
-  $handler->display->display_options['fields']['field_object_ref_title_field']['table'] = 'search_api_index_solr_node_index';
-  $handler->display->display_options['fields']['field_object_ref_title_field']['field'] = 'field_object_ref_title_field';
-  $handler->display->display_options['fields']['field_object_ref_title_field']['ui_name'] = 'Apartment Header Rewrite (Object Title)';
-  $handler->display->display_options['fields']['field_object_ref_title_field']['label'] = '';
-  $handler->display->display_options['fields']['field_object_ref_title_field']['exclude'] = TRUE;
-  $handler->display->display_options['fields']['field_object_ref_title_field']['element_label_colon'] = FALSE;
-  /* Field: Apartment Rewrite (Purchasing price) */
+  /* Field: Indexed Node: Titel */
+  $handler->display->display_options['fields']['title_field']['id'] = 'title_field';
+  $handler->display->display_options['fields']['title_field']['table'] = 'search_api_index_solr_node_index';
+  $handler->display->display_options['fields']['title_field']['field'] = 'title_field';
+  $handler->display->display_options['fields']['title_field']['exclude'] = TRUE;
+  /* Field: Indexed Node: Purchasing price */
   $handler->display->display_options['fields']['field_apart_price']['id'] = 'field_apart_price';
   $handler->display->display_options['fields']['field_apart_price']['table'] = 'search_api_index_solr_node_index';
   $handler->display->display_options['fields']['field_apart_price']['field'] = 'field_apart_price';
-  $handler->display->display_options['fields']['field_apart_price']['ui_name'] = 'Apartment Rewrite (Purchasing price)';
   $handler->display->display_options['fields']['field_apart_price']['label'] = '';
   $handler->display->display_options['fields']['field_apart_price']['alter']['alter_text'] = TRUE;
   $handler->display->display_options['fields']['field_apart_price']['alter']['text'] = '<div class="apart"><span class="id">[field_object_ref_field_objektid_nunumeric]-[field_apart_no]</span><span class="rooms">[field_apart_rooms]</span><span class="space">[field_apart_living_space]</span><span class="price">[field_apart_price]</span><a class="more"  href="/node/[nid]">Details</a></div>';
-  $handler->display->display_options['fields']['field_apart_price']['alter']['path'] = 'node/[nid]';
   $handler->display->display_options['fields']['field_apart_price']['element_label_colon'] = FALSE;
-  $handler->display->display_options['fields']['field_apart_price']['hide_empty'] = TRUE;
   $handler->display->display_options['fields']['field_apart_price']['settings'] = array(
     'thousand_separator' => ' ',
-    'decimal_separator' => ',',
-    'scale' => '0',
+    'decimal_separator' => '.',
+    'scale' => '2',
     'prefix_suffix' => 1,
   );
   /* Field: Indexed Node: Standort */
@@ -207,172 +222,19 @@ function hk_search_views_default_views() {
   $handler->display->display_options['fields']['field_objekt_wkt']['settings'] = array(
     'data' => 'full',
   );
-  /* Filter criterion: Indexed Node: Content type */
+  /* Filter criterion: Indexed Node: Inhaltstyp */
   $handler->display->display_options['filters']['type']['id'] = 'type';
   $handler->display->display_options['filters']['type']['table'] = 'search_api_index_solr_node_index';
   $handler->display->display_options['filters']['type']['field'] = 'type';
   $handler->display->display_options['filters']['type']['value'] = array(
-    'objekt' => 'objekt',
     'apartment' => 'apartment',
   );
-  $handler->display->display_options['filters']['type']['group'] = 1;
-  /* Filter criterion: Object: Borough (indexed) */
-  $handler->display->display_options['filters']['field_object_ref_field_bezirk']['id'] = 'field_object_ref_field_bezirk';
-  $handler->display->display_options['filters']['field_object_ref_field_bezirk']['table'] = 'search_api_index_solr_node_index';
-  $handler->display->display_options['filters']['field_object_ref_field_bezirk']['field'] = 'field_object_ref_field_bezirk';
-  $handler->display->display_options['filters']['field_object_ref_field_bezirk']['value'] = array();
-  $handler->display->display_options['filters']['field_object_ref_field_bezirk']['group'] = 1;
-  $handler->display->display_options['filters']['field_object_ref_field_bezirk']['exposed'] = TRUE;
-  $handler->display->display_options['filters']['field_object_ref_field_bezirk']['expose']['operator_id'] = 'field_object_ref_field_bezirk_op';
-  $handler->display->display_options['filters']['field_object_ref_field_bezirk']['expose']['operator'] = 'field_object_ref_field_bezirk_op';
-  $handler->display->display_options['filters']['field_object_ref_field_bezirk']['expose']['identifier'] = 'bezirk';
-  $handler->display->display_options['filters']['field_object_ref_field_bezirk']['expose']['remember_roles'] = array(
-    2 => '2',
-    1 => 0,
-    4 => 0,
-    6 => 0,
-    5 => 0,
-    7 => 0,
-    3 => 0,
-  );
-  $handler->display->display_options['filters']['field_object_ref_field_bezirk']['expose']['reduce'] = 0;
-  /* Filter criterion: Object: Category (indexed) */
-  $handler->display->display_options['filters']['field_object_ref_field_kategorie']['id'] = 'field_object_ref_field_kategorie';
-  $handler->display->display_options['filters']['field_object_ref_field_kategorie']['table'] = 'search_api_index_solr_node_index';
-  $handler->display->display_options['filters']['field_object_ref_field_kategorie']['field'] = 'field_object_ref_field_kategorie';
-  $handler->display->display_options['filters']['field_object_ref_field_kategorie']['value'] = array(
-    2009 => '2009',
-    2010 => '2010',
-    2012 => '2012',
-    2015 => '2015',
-    2016 => '2016',
-  );
-  $handler->display->display_options['filters']['field_object_ref_field_kategorie']['group'] = 1;
-  $handler->display->display_options['filters']['field_object_ref_field_kategorie']['exposed'] = TRUE;
-  $handler->display->display_options['filters']['field_object_ref_field_kategorie']['expose']['operator_id'] = 'field_object_ref_field_kategorie_op';
-  $handler->display->display_options['filters']['field_object_ref_field_kategorie']['expose']['operator'] = 'field_object_ref_field_kategorie_op';
-  $handler->display->display_options['filters']['field_object_ref_field_kategorie']['expose']['identifier'] = 'kategorie';
-  $handler->display->display_options['filters']['field_object_ref_field_kategorie']['expose']['remember_roles'] = array(
-    2 => '2',
-    1 => 0,
-    4 => 0,
-    6 => 0,
-    5 => 0,
-    7 => 0,
-    3 => 0,
-  );
-  $handler->display->display_options['filters']['field_object_ref_field_kategorie']['expose']['reduce'] = 1;
-  /* Filter criterion: Indexed Node: Rooms */
-  $handler->display->display_options['filters']['field_apart_rooms']['id'] = 'field_apart_rooms';
-  $handler->display->display_options['filters']['field_apart_rooms']['table'] = 'search_api_index_solr_node_index';
-  $handler->display->display_options['filters']['field_apart_rooms']['field'] = 'field_apart_rooms';
-  $handler->display->display_options['filters']['field_apart_rooms']['group'] = 1;
-  $handler->display->display_options['filters']['field_apart_rooms']['exposed'] = TRUE;
-  $handler->display->display_options['filters']['field_apart_rooms']['expose']['operator_id'] = 'field_apart_rooms_op';
-  $handler->display->display_options['filters']['field_apart_rooms']['expose']['label'] = 'Rooms';
-  $handler->display->display_options['filters']['field_apart_rooms']['expose']['operator'] = 'field_apart_rooms_op';
-  $handler->display->display_options['filters']['field_apart_rooms']['expose']['identifier'] = 'field_apart_rooms';
-  $handler->display->display_options['filters']['field_apart_rooms']['is_grouped'] = TRUE;
-  $handler->display->display_options['filters']['field_apart_rooms']['group_info']['identifier'] = 'zimmer';
-  $handler->display->display_options['filters']['field_apart_rooms']['group_info']['group_items'] = array(
-    1 => array(
-      'title' => '1 bis 2',
-      'operator' => '<=',
-      'value' => '2',
-    ),
-    2 => array(
-      'title' => 'bis 3',
-      'operator' => '<=',
-      'value' => '3',
-    ),
-    3 => array(
-      'title' => 'bis 4',
-      'operator' => '<=',
-      'value' => '4',
-    ),
-    4 => array(
-      'title' => 'bis 5',
-      'operator' => '<=',
-      'value' => '5',
-    ),
-    5 => array(
-      'title' => 'mehr als 5',
-      'operator' => '>',
-      'value' => '5',
-    ),
-  );
-  /* Filter criterion: Indexed Node: Living space */
-  $handler->display->display_options['filters']['field_apart_living_space']['id'] = 'field_apart_living_space';
-  $handler->display->display_options['filters']['field_apart_living_space']['table'] = 'search_api_index_solr_node_index';
-  $handler->display->display_options['filters']['field_apart_living_space']['field'] = 'field_apart_living_space';
-  $handler->display->display_options['filters']['field_apart_living_space']['group'] = 1;
-  $handler->display->display_options['filters']['field_apart_living_space']['exposed'] = TRUE;
-  $handler->display->display_options['filters']['field_apart_living_space']['expose']['operator_id'] = 'field_apart_living_space_op';
-  $handler->display->display_options['filters']['field_apart_living_space']['expose']['label'] = 'Living space';
-  $handler->display->display_options['filters']['field_apart_living_space']['expose']['operator'] = 'field_apart_living_space_op';
-  $handler->display->display_options['filters']['field_apart_living_space']['expose']['identifier'] = 'field_apart_living_space';
-  $handler->display->display_options['filters']['field_apart_living_space']['is_grouped'] = TRUE;
-  $handler->display->display_options['filters']['field_apart_living_space']['group_info']['identifier'] = 'flaeche';
-  $handler->display->display_options['filters']['field_apart_living_space']['group_info']['group_items'] = array(
-    1 => array(
-      'title' => 'bis 50m²',
-      'operator' => '<=',
-      'value' => '50',
-    ),
-    2 => array(
-      'title' => 'bis 100m²',
-      'operator' => '<=',
-      'value' => '100',
-    ),
-    3 => array(
-      'title' => 'bis 150m²',
-      'operator' => '<=',
-      'value' => '150',
-    ),
-    4 => array(
-      'title' => 'ab 150m²',
-      'operator' => '>=',
-      'value' => '150',
-    ),
-  );
-  /* Filter criterion: Indexed Node: Purchasing price */
-  $handler->display->display_options['filters']['field_apart_price']['id'] = 'field_apart_price';
-  $handler->display->display_options['filters']['field_apart_price']['table'] = 'search_api_index_solr_node_index';
-  $handler->display->display_options['filters']['field_apart_price']['field'] = 'field_apart_price';
-  $handler->display->display_options['filters']['field_apart_price']['group'] = 1;
-  $handler->display->display_options['filters']['field_apart_price']['exposed'] = TRUE;
-  $handler->display->display_options['filters']['field_apart_price']['expose']['operator_id'] = 'field_apart_price_op';
-  $handler->display->display_options['filters']['field_apart_price']['expose']['label'] = 'Purchasing price';
-  $handler->display->display_options['filters']['field_apart_price']['expose']['operator'] = 'field_apart_price_op';
-  $handler->display->display_options['filters']['field_apart_price']['expose']['identifier'] = 'field_apart_price';
-  $handler->display->display_options['filters']['field_apart_price']['is_grouped'] = TRUE;
-  $handler->display->display_options['filters']['field_apart_price']['group_info']['identifier'] = 'preis';
-  $handler->display->display_options['filters']['field_apart_price']['group_info']['group_items'] = array(
-    1 => array(
-      'title' => 'bis 100 000€',
-      'operator' => '<=',
-      'value' => '100000',
-    ),
-    2 => array(
-      'title' => 'bis 250 000€',
-      'operator' => '<=',
-      'value' => '250000',
-    ),
-    3 => array(
-      'title' => 'bis 500 000€',
-      'operator' => '<=',
-      'value' => '500000',
-    ),
-    4 => array(
-      'title' => 'bis 1 000 000€',
-      'operator' => '<=',
-      'value' => '1000000',
-    ),
-    5 => array(
-      'title' => 'ab 1 000 000€',
-      'operator' => '>=',
-      'value' => '1000000',
-    ),
+  /* Filter criterion: Indexed Node: Status */
+  $handler->display->display_options['filters']['status']['id'] = 'status';
+  $handler->display->display_options['filters']['status']['table'] = 'search_api_index_solr_node_index';
+  $handler->display->display_options['filters']['status']['field'] = 'status';
+  $handler->display->display_options['filters']['status']['value'] = array(
+    1 => '1',
   );
   $handler->display->display_options['use_ajax_flags'] = array(
     'merken' => 'merken',
@@ -380,26 +242,35 @@ function hk_search_views_default_views() {
   );
   $handler->display->display_options['use_ajax_flags_widget'] = 'throbber';
 
-  /* Display: Background Map */
-  $handler = $view->new_display('page', 'Background Map', 'map_page');
+  /* Display: Frontpage Map */
+  $handler = $view->new_display('page', 'Frontpage Map', 'map_page');
+  $handler->display->display_options['display_description'] = 'Karte für die Startseite, als Page in die Systemeinstellungen eingetragen.';
   $handler->display->display_options['exposed_block'] = TRUE;
+  $handler->display->display_options['defaults']['relationships'] = FALSE;
+  /* Relationship: Indexed Node: Object */
+  $handler->display->display_options['relationships']['field_object_ref']['id'] = 'field_object_ref';
+  $handler->display->display_options['relationships']['field_object_ref']['table'] = 'search_api_index_solr_node_index';
+  $handler->display->display_options['relationships']['field_object_ref']['field'] = 'field_object_ref';
   $handler->display->display_options['path'] = 'map';
 
   /* Display: Map Background Block */
   $handler = $view->new_display('block', 'Map Background Block', 'map_block');
+  $handler->display->display_options['display_description'] = 'Karte als Hintergrund für alle Seiten außer Front, per views_embed in page.tpl.php eingebunden';
 
   /* Display: Kaufen */
   $handler = $view->new_display('page', 'Kaufen', 'kaufen');
   $handler->display->display_options['defaults']['title'] = FALSE;
-  $handler->display->display_options['title'] = 'Buy';
+  $handler->display->display_options['title'] = 'Kaufen';
   $handler->display->display_options['defaults']['css_class'] = FALSE;
   $handler->display->display_options['css_class'] = 'kaufen';
+  $handler->display->display_options['display_description'] = 'Listensuche, als Page unter /buy /kaufen eingebunden';
   $handler->display->display_options['defaults']['pager'] = FALSE;
   $handler->display->display_options['pager']['type'] = 'full';
   $handler->display->display_options['pager']['options']['items_per_page'] = '12';
   $handler->display->display_options['pager']['options']['offset'] = '0';
   $handler->display->display_options['pager']['options']['id'] = '1';
   $handler->display->display_options['pager']['options']['quantity'] = '9';
+  $handler->display->display_options['pager']['options']['expose']['items_per_page_options_all_label'] = 'Alle';
   $handler->display->display_options['defaults']['style_plugin'] = FALSE;
   $handler->display->display_options['style_plugin'] = 'default';
   $handler->display->display_options['style_options']['default_row_class'] = FALSE;
@@ -409,6 +280,7 @@ function hk_search_views_default_views() {
   $handler->display->display_options['row_options']['view_mode'] = 'teaser';
   $handler->display->display_options['defaults']['row_options'] = FALSE;
   $handler->display->display_options['exposed_block'] = TRUE;
+  $handler->display->display_options['defaults']['relationships'] = FALSE;
   $handler->display->display_options['defaults']['fields'] = FALSE;
   /* Field: Indexed Node: Node ID */
   $handler->display->display_options['fields']['nid']['id'] = 'nid';
@@ -437,6 +309,7 @@ function hk_search_views_default_views() {
   $handler->display->display_options['fields']['field_apart_living_space']['id'] = 'field_apart_living_space';
   $handler->display->display_options['fields']['field_apart_living_space']['table'] = 'search_api_index_solr_node_index';
   $handler->display->display_options['fields']['field_apart_living_space']['field'] = 'field_apart_living_space';
+  $handler->display->display_options['fields']['field_apart_living_space']['label'] = 'Fläche';
   $handler->display->display_options['fields']['field_apart_living_space']['settings'] = array(
     'thousand_separator' => ' ',
     'decimal_separator' => '.',
@@ -457,6 +330,7 @@ function hk_search_views_default_views() {
   $handler->display->display_options['fields']['field_apart_rooms']['id'] = 'field_apart_rooms';
   $handler->display->display_options['fields']['field_apart_rooms']['table'] = 'search_api_index_solr_node_index';
   $handler->display->display_options['fields']['field_apart_rooms']['field'] = 'field_apart_rooms';
+  $handler->display->display_options['fields']['field_apart_rooms']['label'] = 'Zimmer';
   $handler->display->display_options['fields']['field_apart_rooms']['settings'] = array(
     'thousand_separator' => ' ',
     'prefix_suffix' => 1,
@@ -473,23 +347,20 @@ function hk_search_views_default_views() {
   $handler->display->display_options['fields']['field_objekt_wkt']['settings'] = array(
     'data' => 'full',
   );
-  /* Field: Broken/missing handler */
+  /* Field: Object » Standort: Well-known text (indexed) */
   $handler->display->display_options['fields']['field_object_ref_field_objekt_wkt_geom']['id'] = 'field_object_ref_field_objekt_wkt_geom';
   $handler->display->display_options['fields']['field_object_ref_field_objekt_wkt_geom']['table'] = 'search_api_index_solr_node_index';
   $handler->display->display_options['fields']['field_object_ref_field_objekt_wkt_geom']['field'] = 'field_object_ref_field_objekt_wkt_geom';
   $handler->display->display_options['fields']['field_object_ref_field_objekt_wkt_geom']['label'] = 'Objektstandort';
   $handler->display->display_options['fields']['field_object_ref_field_objekt_wkt_geom']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['field_object_ref_field_objekt_wkt_geom']['element_default_classes'] = FALSE;
-  /* Field: Object: Borough (indexed) */
+  /* Field: Broken/missing handler */
   $handler->display->display_options['fields']['field_object_ref_field_bezirk']['id'] = 'field_object_ref_field_bezirk';
   $handler->display->display_options['fields']['field_object_ref_field_bezirk']['table'] = 'search_api_index_solr_node_index';
   $handler->display->display_options['fields']['field_object_ref_field_bezirk']['field'] = 'field_object_ref_field_bezirk';
   $handler->display->display_options['fields']['field_object_ref_field_bezirk']['label'] = 'Objektbezirk';
   $handler->display->display_options['fields']['field_object_ref_field_bezirk']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['field_object_ref_field_bezirk']['element_default_classes'] = FALSE;
-  $handler->display->display_options['fields']['field_object_ref_field_bezirk']['link_to_entity'] = 0;
-  $handler->display->display_options['fields']['field_object_ref_field_bezirk']['view_mode'] = 'full';
-  $handler->display->display_options['fields']['field_object_ref_field_bezirk']['bypass_access'] = 0;
   /* Field: Broken/missing handler */
   $handler->display->display_options['fields']['field_object_ref_title']['id'] = 'field_object_ref_title';
   $handler->display->display_options['fields']['field_object_ref_title']['table'] = 'search_api_index_solr_node_index';
@@ -505,19 +376,34 @@ function hk_search_views_default_views() {
   $handler->display->display_options['fields']['field_object_ref_field_apart_pictures_file']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['field_object_ref_field_apart_pictures_file']['element_default_classes'] = FALSE;
   $handler->display->display_options['defaults']['sorts'] = FALSE;
-  /* Sort criterion: Indexed Node: Date changed */
-  $handler->display->display_options['sorts']['changed']['id'] = 'changed';
-  $handler->display->display_options['sorts']['changed']['table'] = 'search_api_index_solr_node_index';
-  $handler->display->display_options['sorts']['changed']['field'] = 'changed';
-  $handler->display->display_options['sorts']['changed']['order'] = 'DESC';
   /* Sort criterion: Search: Relevance */
   $handler->display->display_options['sorts']['search_api_relevance']['id'] = 'search_api_relevance';
   $handler->display->display_options['sorts']['search_api_relevance']['table'] = 'search_api_index_solr_node_index';
   $handler->display->display_options['sorts']['search_api_relevance']['field'] = 'search_api_relevance';
   $handler->display->display_options['sorts']['search_api_relevance']['order'] = 'DESC';
+  $handler->display->display_options['defaults']['arguments'] = FALSE;
+  /* Contextual filter: Search: Indexed taxonomy term fields */
+  $handler->display->display_options['arguments']['search_api_views_taxonomy_term']['id'] = 'search_api_views_taxonomy_term';
+  $handler->display->display_options['arguments']['search_api_views_taxonomy_term']['table'] = 'search_api_index_solr_node_index';
+  $handler->display->display_options['arguments']['search_api_views_taxonomy_term']['field'] = 'search_api_views_taxonomy_term';
+  $handler->display->display_options['arguments']['search_api_views_taxonomy_term']['exception']['title'] = 'Alle';
+  $handler->display->display_options['arguments']['search_api_views_taxonomy_term']['title_enable'] = TRUE;
+  $handler->display->display_options['arguments']['search_api_views_taxonomy_term']['title'] = 'Buy > %1';
+  $handler->display->display_options['arguments']['search_api_views_taxonomy_term']['default_argument_type'] = 'fixed';
+  $handler->display->display_options['arguments']['search_api_views_taxonomy_term']['summary']['format'] = 'default_summary';
+  $handler->display->display_options['arguments']['search_api_views_taxonomy_term']['specify_validation'] = TRUE;
+  $handler->display->display_options['arguments']['search_api_views_taxonomy_term']['validate']['type'] = 'taxonomy_term';
+  $handler->display->display_options['arguments']['search_api_views_taxonomy_term']['validate_options']['vocabularies'] = array(
+    'category' => 'category',
+  );
+  $handler->display->display_options['arguments']['search_api_views_taxonomy_term']['validate_options']['type'] = 'convert';
+  $handler->display->display_options['arguments']['search_api_views_taxonomy_term']['validate_options']['transform'] = TRUE;
+  $handler->display->display_options['arguments']['search_api_views_taxonomy_term']['validate']['fail'] = 'empty';
+  $handler->display->display_options['arguments']['search_api_views_taxonomy_term']['break_phrase'] = 0;
+  $handler->display->display_options['arguments']['search_api_views_taxonomy_term']['not'] = 0;
   $handler->display->display_options['defaults']['filter_groups'] = FALSE;
   $handler->display->display_options['defaults']['filters'] = FALSE;
-  /* Filter criterion: Indexed Node: Content type */
+  /* Filter criterion: Indexed Node: Inhaltstyp */
   $handler->display->display_options['filters']['type']['id'] = 'type';
   $handler->display->display_options['filters']['type']['table'] = 'search_api_index_solr_node_index';
   $handler->display->display_options['filters']['type']['field'] = 'type';
@@ -525,204 +411,30 @@ function hk_search_views_default_views() {
     'apartment' => 'apartment',
   );
   $handler->display->display_options['filters']['type']['group'] = 1;
-  /* Filter criterion: Object: Category (indexed) */
-  $handler->display->display_options['filters']['field_object_ref_field_kategorie_1']['id'] = 'field_object_ref_field_kategorie_1';
-  $handler->display->display_options['filters']['field_object_ref_field_kategorie_1']['table'] = 'search_api_index_solr_node_index';
-  $handler->display->display_options['filters']['field_object_ref_field_kategorie_1']['field'] = 'field_object_ref_field_kategorie';
-  $handler->display->display_options['filters']['field_object_ref_field_kategorie_1']['value'] = array(
-    2009 => '2009',
-    2010 => '2010',
-    2012 => '2012',
-  );
-  $handler->display->display_options['filters']['field_object_ref_field_kategorie_1']['group'] = 1;
-  /* Filter criterion: Object: Borough (indexed) */
-  $handler->display->display_options['filters']['field_object_ref_field_bezirk']['id'] = 'field_object_ref_field_bezirk';
-  $handler->display->display_options['filters']['field_object_ref_field_bezirk']['table'] = 'search_api_index_solr_node_index';
-  $handler->display->display_options['filters']['field_object_ref_field_bezirk']['field'] = 'field_object_ref_field_bezirk';
-  $handler->display->display_options['filters']['field_object_ref_field_bezirk']['value'] = array();
-  $handler->display->display_options['filters']['field_object_ref_field_bezirk']['group'] = 1;
-  $handler->display->display_options['filters']['field_object_ref_field_bezirk']['exposed'] = TRUE;
-  $handler->display->display_options['filters']['field_object_ref_field_bezirk']['expose']['operator_id'] = 'field_object_ref_field_bezirk_op';
-  $handler->display->display_options['filters']['field_object_ref_field_bezirk']['expose']['operator'] = 'field_object_ref_field_bezirk_op';
-  $handler->display->display_options['filters']['field_object_ref_field_bezirk']['expose']['identifier'] = 'bezirk';
-  $handler->display->display_options['filters']['field_object_ref_field_bezirk']['expose']['remember_roles'] = array(
-    2 => '2',
-    1 => 0,
-    4 => 0,
-    6 => 0,
-    5 => 0,
-    7 => 0,
-    3 => 0,
-  );
-  $handler->display->display_options['filters']['field_object_ref_field_bezirk']['expose']['reduce'] = 0;
-  /* Filter criterion: Object: Category (indexed) */
-  $handler->display->display_options['filters']['field_object_ref_field_kategorie']['id'] = 'field_object_ref_field_kategorie';
-  $handler->display->display_options['filters']['field_object_ref_field_kategorie']['table'] = 'search_api_index_solr_node_index';
-  $handler->display->display_options['filters']['field_object_ref_field_kategorie']['field'] = 'field_object_ref_field_kategorie';
-  $handler->display->display_options['filters']['field_object_ref_field_kategorie']['value'] = array(
-    2009 => '2009',
-    2010 => '2010',
-    2012 => '2012',
-    2015 => '2015',
-    2016 => '2016',
-  );
-  $handler->display->display_options['filters']['field_object_ref_field_kategorie']['group'] = 1;
-  $handler->display->display_options['filters']['field_object_ref_field_kategorie']['exposed'] = TRUE;
-  $handler->display->display_options['filters']['field_object_ref_field_kategorie']['expose']['operator_id'] = 'field_object_ref_field_kategorie_op';
-  $handler->display->display_options['filters']['field_object_ref_field_kategorie']['expose']['operator'] = 'field_object_ref_field_kategorie_op';
-  $handler->display->display_options['filters']['field_object_ref_field_kategorie']['expose']['identifier'] = 'kategorie';
-  $handler->display->display_options['filters']['field_object_ref_field_kategorie']['expose']['remember_roles'] = array(
-    2 => '2',
-    1 => 0,
-    4 => 0,
-    6 => 0,
-    5 => 0,
-    7 => 0,
-    3 => 0,
-  );
-  $handler->display->display_options['filters']['field_object_ref_field_kategorie']['expose']['reduce'] = 1;
-  /* Filter criterion: Indexed Node: Rooms */
-  $handler->display->display_options['filters']['field_apart_rooms']['id'] = 'field_apart_rooms';
-  $handler->display->display_options['filters']['field_apart_rooms']['table'] = 'search_api_index_solr_node_index';
-  $handler->display->display_options['filters']['field_apart_rooms']['field'] = 'field_apart_rooms';
-  $handler->display->display_options['filters']['field_apart_rooms']['group'] = 1;
-  $handler->display->display_options['filters']['field_apart_rooms']['exposed'] = TRUE;
-  $handler->display->display_options['filters']['field_apart_rooms']['expose']['operator_id'] = 'field_apart_rooms_op';
-  $handler->display->display_options['filters']['field_apart_rooms']['expose']['label'] = 'Rooms';
-  $handler->display->display_options['filters']['field_apart_rooms']['expose']['operator'] = 'field_apart_rooms_op';
-  $handler->display->display_options['filters']['field_apart_rooms']['expose']['identifier'] = 'field_apart_rooms';
-  $handler->display->display_options['filters']['field_apart_rooms']['is_grouped'] = TRUE;
-  $handler->display->display_options['filters']['field_apart_rooms']['group_info']['identifier'] = 'zimmer';
-  $handler->display->display_options['filters']['field_apart_rooms']['group_info']['group_items'] = array(
-    1 => array(
-      'title' => '1 bis 2',
-      'operator' => '<=',
-      'value' => '2',
-    ),
-    2 => array(
-      'title' => 'bis 3',
-      'operator' => '<=',
-      'value' => '3',
-    ),
-    3 => array(
-      'title' => 'bis 4',
-      'operator' => '<=',
-      'value' => '4',
-    ),
-    4 => array(
-      'title' => 'bis 5',
-      'operator' => '<=',
-      'value' => '5',
-    ),
-    5 => array(
-      'title' => 'mehr als 5',
-      'operator' => '>',
-      'value' => '5',
-    ),
-  );
-  /* Filter criterion: Indexed Node: Living space */
-  $handler->display->display_options['filters']['field_apart_living_space']['id'] = 'field_apart_living_space';
-  $handler->display->display_options['filters']['field_apart_living_space']['table'] = 'search_api_index_solr_node_index';
-  $handler->display->display_options['filters']['field_apart_living_space']['field'] = 'field_apart_living_space';
-  $handler->display->display_options['filters']['field_apart_living_space']['group'] = 1;
-  $handler->display->display_options['filters']['field_apart_living_space']['exposed'] = TRUE;
-  $handler->display->display_options['filters']['field_apart_living_space']['expose']['operator_id'] = 'field_apart_living_space_op';
-  $handler->display->display_options['filters']['field_apart_living_space']['expose']['label'] = 'Living space';
-  $handler->display->display_options['filters']['field_apart_living_space']['expose']['operator'] = 'field_apart_living_space_op';
-  $handler->display->display_options['filters']['field_apart_living_space']['expose']['identifier'] = 'field_apart_living_space';
-  $handler->display->display_options['filters']['field_apart_living_space']['is_grouped'] = TRUE;
-  $handler->display->display_options['filters']['field_apart_living_space']['group_info']['identifier'] = 'flaeche';
-  $handler->display->display_options['filters']['field_apart_living_space']['group_info']['group_items'] = array(
-    1 => array(
-      'title' => 'bis 50m²',
-      'operator' => '<=',
-      'value' => '50',
-    ),
-    2 => array(
-      'title' => 'bis 100m²',
-      'operator' => '<=',
-      'value' => '100',
-    ),
-    3 => array(
-      'title' => 'bis 150m²',
-      'operator' => '<=',
-      'value' => '150',
-    ),
-    4 => array(
-      'title' => 'ab 150m²',
-      'operator' => '>=',
-      'value' => '150',
-    ),
-  );
-  /* Filter criterion: Indexed Node: Purchasing price */
-  $handler->display->display_options['filters']['field_apart_price']['id'] = 'field_apart_price';
-  $handler->display->display_options['filters']['field_apart_price']['table'] = 'search_api_index_solr_node_index';
-  $handler->display->display_options['filters']['field_apart_price']['field'] = 'field_apart_price';
-  $handler->display->display_options['filters']['field_apart_price']['group'] = 1;
-  $handler->display->display_options['filters']['field_apart_price']['exposed'] = TRUE;
-  $handler->display->display_options['filters']['field_apart_price']['expose']['operator_id'] = 'field_apart_price_op';
-  $handler->display->display_options['filters']['field_apart_price']['expose']['label'] = 'Purchasing price';
-  $handler->display->display_options['filters']['field_apart_price']['expose']['operator'] = 'field_apart_price_op';
-  $handler->display->display_options['filters']['field_apart_price']['expose']['identifier'] = 'field_apart_price';
-  $handler->display->display_options['filters']['field_apart_price']['is_grouped'] = TRUE;
-  $handler->display->display_options['filters']['field_apart_price']['group_info']['identifier'] = 'preis';
-  $handler->display->display_options['filters']['field_apart_price']['group_info']['group_items'] = array(
-    1 => array(
-      'title' => 'bis 100 000€',
-      'operator' => '<=',
-      'value' => '100000',
-    ),
-    2 => array(
-      'title' => 'bis 250 000€',
-      'operator' => '<=',
-      'value' => '250000',
-    ),
-    3 => array(
-      'title' => 'bis 500 000€',
-      'operator' => '<=',
-      'value' => '500000',
-    ),
-    4 => array(
-      'title' => 'bis 1 000 000€',
-      'operator' => '<=',
-      'value' => '1000000',
-    ),
-    5 => array(
-      'title' => 'ab 1 000 000€',
-      'operator' => '>=',
-      'value' => '1000000',
-    ),
-  );
-  /* Filter criterion: Search: Fulltext search */
-  $handler->display->display_options['filters']['search_api_views_fulltext']['id'] = 'search_api_views_fulltext';
-  $handler->display->display_options['filters']['search_api_views_fulltext']['table'] = 'search_api_index_solr_node_index';
-  $handler->display->display_options['filters']['search_api_views_fulltext']['field'] = 'search_api_views_fulltext';
-  $handler->display->display_options['filters']['search_api_views_fulltext']['exposed'] = TRUE;
-  $handler->display->display_options['filters']['search_api_views_fulltext']['expose']['operator_id'] = 'search_api_views_fulltext_op';
-  $handler->display->display_options['filters']['search_api_views_fulltext']['expose']['label'] = 'Fulltext search';
-  $handler->display->display_options['filters']['search_api_views_fulltext']['expose']['operator'] = 'search_api_views_fulltext_op';
-  $handler->display->display_options['filters']['search_api_views_fulltext']['expose']['identifier'] = 'query';
-  $handler->display->display_options['filters']['search_api_views_fulltext']['expose']['remember_roles'] = array(
-    2 => '2',
-    1 => 0,
-    4 => 0,
-    6 => 0,
-    5 => 0,
-    7 => 0,
-    3 => 0,
+  /* Filter criterion: Indexed Node: Category */
+  $handler->display->display_options['filters']['field_kategorie']['id'] = 'field_kategorie';
+  $handler->display->display_options['filters']['field_kategorie']['table'] = 'search_api_index_solr_node_index';
+  $handler->display->display_options['filters']['field_kategorie']['field'] = 'field_kategorie';
+  $handler->display->display_options['filters']['field_kategorie']['value'] = array(
+    15 => '15',
+    11 => '11',
+    7 => '7',
+    133 => '133',
   );
   $handler->display->display_options['path'] = 'buy';
 
   /* Display: Mieten */
   $handler = $view->new_display('page', 'Mieten', 'mieten');
   $handler->display->display_options['defaults']['title'] = FALSE;
-  $handler->display->display_options['title'] = 'Rent';
+  $handler->display->display_options['title'] = 'Mieten';
+  $handler->display->display_options['display_description'] = 'Listensuche, als Page unter /rent /mieten eingebunden';
   $handler->display->display_options['defaults']['pager'] = FALSE;
   $handler->display->display_options['pager']['type'] = 'full';
   $handler->display->display_options['pager']['options']['items_per_page'] = '12';
   $handler->display->display_options['pager']['options']['offset'] = '0';
   $handler->display->display_options['pager']['options']['id'] = '0';
   $handler->display->display_options['pager']['options']['quantity'] = '9';
+  $handler->display->display_options['pager']['options']['expose']['items_per_page_options_all_label'] = 'Alle';
   $handler->display->display_options['defaults']['style_plugin'] = FALSE;
   $handler->display->display_options['style_plugin'] = 'default';
   $handler->display->display_options['style_options']['row_class'] = 'group-card';
@@ -848,25 +560,35 @@ function hk_search_views_default_views() {
   $handler->display->display_options['fields']['field_object_ref_field_address_thoroughfare']['label'] = '';
   $handler->display->display_options['fields']['field_object_ref_field_address_thoroughfare']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['field_object_ref_field_address_thoroughfare']['link_to_entity'] = 0;
-  /* Field: Object: Borough (indexed) */
-  $handler->display->display_options['fields']['field_object_ref_field_bezirk']['id'] = 'field_object_ref_field_bezirk';
-  $handler->display->display_options['fields']['field_object_ref_field_bezirk']['table'] = 'search_api_index_solr_node_index';
-  $handler->display->display_options['fields']['field_object_ref_field_bezirk']['field'] = 'field_object_ref_field_bezirk';
-  $handler->display->display_options['fields']['field_object_ref_field_bezirk']['label'] = '';
-  $handler->display->display_options['fields']['field_object_ref_field_bezirk']['element_label_colon'] = FALSE;
-  $handler->display->display_options['fields']['field_object_ref_field_bezirk']['element_default_classes'] = FALSE;
-  $handler->display->display_options['fields']['field_object_ref_field_bezirk']['link_to_entity'] = 0;
-  $handler->display->display_options['fields']['field_object_ref_field_bezirk']['view_mode'] = 'full';
-  $handler->display->display_options['fields']['field_object_ref_field_bezirk']['bypass_access'] = 0;
   $handler->display->display_options['defaults']['sorts'] = FALSE;
   /* Sort criterion: Search: Relevance */
   $handler->display->display_options['sorts']['search_api_relevance']['id'] = 'search_api_relevance';
   $handler->display->display_options['sorts']['search_api_relevance']['table'] = 'search_api_index_solr_node_index';
   $handler->display->display_options['sorts']['search_api_relevance']['field'] = 'search_api_relevance';
   $handler->display->display_options['sorts']['search_api_relevance']['order'] = 'DESC';
+  $handler->display->display_options['defaults']['arguments'] = FALSE;
+  /* Contextual filter: Search: Indexed taxonomy term fields */
+  $handler->display->display_options['arguments']['search_api_views_taxonomy_term']['id'] = 'search_api_views_taxonomy_term';
+  $handler->display->display_options['arguments']['search_api_views_taxonomy_term']['table'] = 'search_api_index_solr_node_index';
+  $handler->display->display_options['arguments']['search_api_views_taxonomy_term']['field'] = 'search_api_views_taxonomy_term';
+  $handler->display->display_options['arguments']['search_api_views_taxonomy_term']['exception']['title'] = 'Alle';
+  $handler->display->display_options['arguments']['search_api_views_taxonomy_term']['title_enable'] = TRUE;
+  $handler->display->display_options['arguments']['search_api_views_taxonomy_term']['title'] = 'Mieten > %1';
+  $handler->display->display_options['arguments']['search_api_views_taxonomy_term']['default_argument_type'] = 'fixed';
+  $handler->display->display_options['arguments']['search_api_views_taxonomy_term']['summary']['format'] = 'default_summary';
+  $handler->display->display_options['arguments']['search_api_views_taxonomy_term']['specify_validation'] = TRUE;
+  $handler->display->display_options['arguments']['search_api_views_taxonomy_term']['validate']['type'] = 'taxonomy_term';
+  $handler->display->display_options['arguments']['search_api_views_taxonomy_term']['validate_options']['vocabularies'] = array(
+    'category' => 'category',
+  );
+  $handler->display->display_options['arguments']['search_api_views_taxonomy_term']['validate_options']['type'] = 'convert';
+  $handler->display->display_options['arguments']['search_api_views_taxonomy_term']['validate_options']['transform'] = TRUE;
+  $handler->display->display_options['arguments']['search_api_views_taxonomy_term']['validate']['fail'] = 'empty';
+  $handler->display->display_options['arguments']['search_api_views_taxonomy_term']['break_phrase'] = 0;
+  $handler->display->display_options['arguments']['search_api_views_taxonomy_term']['not'] = 0;
   $handler->display->display_options['defaults']['filter_groups'] = FALSE;
   $handler->display->display_options['defaults']['filters'] = FALSE;
-  /* Filter criterion: Indexed Node: Content type */
+  /* Filter criterion: Indexed Node: Inhaltstyp */
   $handler->display->display_options['filters']['type']['id'] = 'type';
   $handler->display->display_options['filters']['type']['table'] = 'search_api_index_solr_node_index';
   $handler->display->display_options['filters']['type']['field'] = 'type';
@@ -874,172 +596,13 @@ function hk_search_views_default_views() {
     'apartment' => 'apartment',
   );
   $handler->display->display_options['filters']['type']['group'] = 1;
-  /* Filter criterion: Object: Category (indexed) */
-  $handler->display->display_options['filters']['field_object_ref_field_kategorie_1']['id'] = 'field_object_ref_field_kategorie_1';
-  $handler->display->display_options['filters']['field_object_ref_field_kategorie_1']['table'] = 'search_api_index_solr_node_index';
-  $handler->display->display_options['filters']['field_object_ref_field_kategorie_1']['field'] = 'field_object_ref_field_kategorie';
-  $handler->display->display_options['filters']['field_object_ref_field_kategorie_1']['value'] = array(
-    2015 => '2015',
-    2016 => '2016',
-  );
-  $handler->display->display_options['filters']['field_object_ref_field_kategorie_1']['group'] = 1;
-  /* Filter criterion: Object: Borough (indexed) */
-  $handler->display->display_options['filters']['field_object_ref_field_bezirk']['id'] = 'field_object_ref_field_bezirk';
-  $handler->display->display_options['filters']['field_object_ref_field_bezirk']['table'] = 'search_api_index_solr_node_index';
-  $handler->display->display_options['filters']['field_object_ref_field_bezirk']['field'] = 'field_object_ref_field_bezirk';
-  $handler->display->display_options['filters']['field_object_ref_field_bezirk']['value'] = array();
-  $handler->display->display_options['filters']['field_object_ref_field_bezirk']['group'] = 1;
-  $handler->display->display_options['filters']['field_object_ref_field_bezirk']['exposed'] = TRUE;
-  $handler->display->display_options['filters']['field_object_ref_field_bezirk']['expose']['operator_id'] = 'field_object_ref_field_bezirk_op';
-  $handler->display->display_options['filters']['field_object_ref_field_bezirk']['expose']['operator'] = 'field_object_ref_field_bezirk_op';
-  $handler->display->display_options['filters']['field_object_ref_field_bezirk']['expose']['identifier'] = 'bezirk';
-  $handler->display->display_options['filters']['field_object_ref_field_bezirk']['expose']['remember_roles'] = array(
-    2 => '2',
-    1 => 0,
-    4 => 0,
-    6 => 0,
-    5 => 0,
-    7 => 0,
-    3 => 0,
-  );
-  $handler->display->display_options['filters']['field_object_ref_field_bezirk']['expose']['reduce'] = 0;
-  /* Filter criterion: Object: Category (indexed) */
-  $handler->display->display_options['filters']['field_object_ref_field_kategorie']['id'] = 'field_object_ref_field_kategorie';
-  $handler->display->display_options['filters']['field_object_ref_field_kategorie']['table'] = 'search_api_index_solr_node_index';
-  $handler->display->display_options['filters']['field_object_ref_field_kategorie']['field'] = 'field_object_ref_field_kategorie';
-  $handler->display->display_options['filters']['field_object_ref_field_kategorie']['value'] = array(
-    2009 => '2009',
-    2010 => '2010',
-    2012 => '2012',
-    2015 => '2015',
-    2016 => '2016',
-  );
-  $handler->display->display_options['filters']['field_object_ref_field_kategorie']['group'] = 1;
-  $handler->display->display_options['filters']['field_object_ref_field_kategorie']['exposed'] = TRUE;
-  $handler->display->display_options['filters']['field_object_ref_field_kategorie']['expose']['operator_id'] = 'field_object_ref_field_kategorie_op';
-  $handler->display->display_options['filters']['field_object_ref_field_kategorie']['expose']['operator'] = 'field_object_ref_field_kategorie_op';
-  $handler->display->display_options['filters']['field_object_ref_field_kategorie']['expose']['identifier'] = 'kategorie';
-  $handler->display->display_options['filters']['field_object_ref_field_kategorie']['expose']['remember_roles'] = array(
-    2 => '2',
-    1 => 0,
-    4 => 0,
-    6 => 0,
-    5 => 0,
-    7 => 0,
-    3 => 0,
-  );
-  $handler->display->display_options['filters']['field_object_ref_field_kategorie']['expose']['reduce'] = 1;
-  /* Filter criterion: Indexed Node: Rooms */
-  $handler->display->display_options['filters']['field_apart_rooms']['id'] = 'field_apart_rooms';
-  $handler->display->display_options['filters']['field_apart_rooms']['table'] = 'search_api_index_solr_node_index';
-  $handler->display->display_options['filters']['field_apart_rooms']['field'] = 'field_apart_rooms';
-  $handler->display->display_options['filters']['field_apart_rooms']['group'] = 1;
-  $handler->display->display_options['filters']['field_apart_rooms']['exposed'] = TRUE;
-  $handler->display->display_options['filters']['field_apart_rooms']['expose']['operator_id'] = 'field_apart_rooms_op';
-  $handler->display->display_options['filters']['field_apart_rooms']['expose']['label'] = 'Rooms';
-  $handler->display->display_options['filters']['field_apart_rooms']['expose']['operator'] = 'field_apart_rooms_op';
-  $handler->display->display_options['filters']['field_apart_rooms']['expose']['identifier'] = 'field_apart_rooms';
-  $handler->display->display_options['filters']['field_apart_rooms']['is_grouped'] = TRUE;
-  $handler->display->display_options['filters']['field_apart_rooms']['group_info']['identifier'] = 'zimmer';
-  $handler->display->display_options['filters']['field_apart_rooms']['group_info']['group_items'] = array(
-    1 => array(
-      'title' => '1 bis 2',
-      'operator' => '<=',
-      'value' => '2',
-    ),
-    2 => array(
-      'title' => 'bis 3',
-      'operator' => '<=',
-      'value' => '3',
-    ),
-    3 => array(
-      'title' => 'bis 4',
-      'operator' => '<=',
-      'value' => '4',
-    ),
-    4 => array(
-      'title' => 'bis 5',
-      'operator' => '<=',
-      'value' => '5',
-    ),
-    5 => array(
-      'title' => 'mehr als 5',
-      'operator' => '>',
-      'value' => '5',
-    ),
-  );
-  /* Filter criterion: Indexed Node: Living space */
-  $handler->display->display_options['filters']['field_apart_living_space']['id'] = 'field_apart_living_space';
-  $handler->display->display_options['filters']['field_apart_living_space']['table'] = 'search_api_index_solr_node_index';
-  $handler->display->display_options['filters']['field_apart_living_space']['field'] = 'field_apart_living_space';
-  $handler->display->display_options['filters']['field_apart_living_space']['group'] = 1;
-  $handler->display->display_options['filters']['field_apart_living_space']['exposed'] = TRUE;
-  $handler->display->display_options['filters']['field_apart_living_space']['expose']['operator_id'] = 'field_apart_living_space_op';
-  $handler->display->display_options['filters']['field_apart_living_space']['expose']['label'] = 'Living space';
-  $handler->display->display_options['filters']['field_apart_living_space']['expose']['operator'] = 'field_apart_living_space_op';
-  $handler->display->display_options['filters']['field_apart_living_space']['expose']['identifier'] = 'field_apart_living_space';
-  $handler->display->display_options['filters']['field_apart_living_space']['is_grouped'] = TRUE;
-  $handler->display->display_options['filters']['field_apart_living_space']['group_info']['identifier'] = 'flaeche';
-  $handler->display->display_options['filters']['field_apart_living_space']['group_info']['group_items'] = array(
-    1 => array(
-      'title' => 'bis 50m²',
-      'operator' => '<=',
-      'value' => '50',
-    ),
-    2 => array(
-      'title' => 'bis 100m²',
-      'operator' => '<=',
-      'value' => '100',
-    ),
-    3 => array(
-      'title' => 'bis 150m²',
-      'operator' => '<=',
-      'value' => '150',
-    ),
-    4 => array(
-      'title' => 'ab 150m²',
-      'operator' => '>=',
-      'value' => '150',
-    ),
-  );
-  /* Filter criterion: Indexed Node: Purchasing price */
-  $handler->display->display_options['filters']['field_apart_price']['id'] = 'field_apart_price';
-  $handler->display->display_options['filters']['field_apart_price']['table'] = 'search_api_index_solr_node_index';
-  $handler->display->display_options['filters']['field_apart_price']['field'] = 'field_apart_price';
-  $handler->display->display_options['filters']['field_apart_price']['group'] = 1;
-  $handler->display->display_options['filters']['field_apart_price']['exposed'] = TRUE;
-  $handler->display->display_options['filters']['field_apart_price']['expose']['operator_id'] = 'field_apart_price_op';
-  $handler->display->display_options['filters']['field_apart_price']['expose']['label'] = 'Purchasing price';
-  $handler->display->display_options['filters']['field_apart_price']['expose']['operator'] = 'field_apart_price_op';
-  $handler->display->display_options['filters']['field_apart_price']['expose']['identifier'] = 'field_apart_price';
-  $handler->display->display_options['filters']['field_apart_price']['is_grouped'] = TRUE;
-  $handler->display->display_options['filters']['field_apart_price']['group_info']['identifier'] = 'preis';
-  $handler->display->display_options['filters']['field_apart_price']['group_info']['group_items'] = array(
-    1 => array(
-      'title' => 'bis 100 000€',
-      'operator' => '<=',
-      'value' => '100000',
-    ),
-    2 => array(
-      'title' => 'bis 250 000€',
-      'operator' => '<=',
-      'value' => '250000',
-    ),
-    3 => array(
-      'title' => 'bis 500 000€',
-      'operator' => '<=',
-      'value' => '500000',
-    ),
-    4 => array(
-      'title' => 'bis 1 000 000€',
-      'operator' => '<=',
-      'value' => '1000000',
-    ),
-    5 => array(
-      'title' => 'ab 1 000 000€',
-      'operator' => '>=',
-      'value' => '1000000',
-    ),
+  /* Filter criterion: Indexed Node: Category */
+  $handler->display->display_options['filters']['field_kategorie']['id'] = 'field_kategorie';
+  $handler->display->display_options['filters']['field_kategorie']['table'] = 'search_api_index_solr_node_index';
+  $handler->display->display_options['filters']['field_kategorie']['field'] = 'field_kategorie';
+  $handler->display->display_options['filters']['field_kategorie']['value'] = array(
+    131 => '131',
+    132 => '132',
   );
   $handler->display->display_options['path'] = 'rent';
 
@@ -1049,7 +612,7 @@ function hk_search_views_default_views() {
   $handler->display->display_options['title'] = 'Ähnliche Wohnungen';
   $handler->display->display_options['defaults']['css_class'] = FALSE;
   $handler->display->display_options['css_class'] = 'mlt';
-  $handler->display->display_options['display_description'] = 'Zeigt ähnliche Wohungen unter einer Wohnung in einer Slideshow an';
+  $handler->display->display_options['display_description'] = 'Zeigt ähnliche Wohungen unter einer Wohnung in einer Slideshow an.';
   $handler->display->display_options['defaults']['pager'] = FALSE;
   $handler->display->display_options['pager']['type'] = 'some';
   $handler->display->display_options['pager']['options']['items_per_page'] = '5';
@@ -1125,6 +688,7 @@ function hk_search_views_default_views() {
   $handler->display->display_options['arguments']['search_api_views_more_like_this']['table'] = 'search_api_index_solr_node_index';
   $handler->display->display_options['arguments']['search_api_views_more_like_this']['field'] = 'search_api_views_more_like_this';
   $handler->display->display_options['arguments']['search_api_views_more_like_this']['default_action'] = 'default';
+  $handler->display->display_options['arguments']['search_api_views_more_like_this']['exception']['title'] = 'Alle';
   $handler->display->display_options['arguments']['search_api_views_more_like_this']['default_argument_type'] = 'node';
   $handler->display->display_options['arguments']['search_api_views_more_like_this']['summary']['format'] = 'default_summary';
   $handler->display->display_options['arguments']['search_api_views_more_like_this']['specify_validation'] = TRUE;
@@ -1147,7 +711,7 @@ function hk_search_views_default_views() {
   );
   $handler->display->display_options['defaults']['filter_groups'] = FALSE;
   $handler->display->display_options['defaults']['filters'] = FALSE;
-  /* Filter criterion: Indexed Node: Content type */
+  /* Filter criterion: Indexed Node: Inhaltstyp */
   $handler->display->display_options['filters']['type']['id'] = 'type';
   $handler->display->display_options['filters']['type']['table'] = 'search_api_index_solr_node_index';
   $handler->display->display_options['filters']['type']['field'] = 'type';

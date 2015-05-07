@@ -92,6 +92,20 @@ rent';
       'search_api_views:karten:feed_1' => 'search_api_views:karten:feed_1',
       'search_api_views:karten:geojson' => 'search_api_views:karten:geojson',
     ),
+    'solr_objekt_index' => array(
+      'search_api_views:hk_map_and_search:default' => 'search_api_views:hk_map_and_search:default',
+      'search_api_views:hk_map_and_search:page' => 'search_api_views:hk_map_and_search:page',
+      'search_api_views:hk_map_and_search:map_front' => 'search_api_views:hk_map_and_search:map_front',
+      'search_api_views:solr_map_apartments:default' => 'search_api_views:solr_map_apartments:default',
+    ),
+    'solr_apartment_index' => array(
+      'search_api_views:solr_map_apartments:default' => 'search_api_views:solr_map_apartments:default',
+      'search_api_views:solr_map_apartments:page' => 'search_api_views:solr_map_apartments:page',
+    ),
+    'denormalized_aapart_index' => array(
+      'search_api_views:grouped_apartments_map:default' => 'search_api_views:grouped_apartments_map:default',
+      'search_api_views:grouped_apartments_map:page' => 'search_api_views:grouped_apartments_map:page',
+    ),
   );
   $export['search_api_facets_search_ids'] = $strongarm;
 

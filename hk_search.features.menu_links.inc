@@ -17,6 +17,10 @@ function hk_search_menu_default_menu_links() {
     'router_path' => 'buy',
     'link_title' => 'Buy',
     'options' => array(
+      'attributes' => array(
+        'title' => '',
+      ),
+      'alter' => TRUE,
       'icon' => array(
         'icon' => '',
         'position' => 'title_before',
@@ -25,10 +29,6 @@ function hk_search_menu_default_menu_links() {
         'breadcrumb' => 0,
         'title_wrapper' => 0,
       ),
-      'attributes' => array(
-        'title' => '',
-      ),
-      'alter' => TRUE,
       'identifier' => 'main-menu_buy:buy',
     ),
     'module' => 'menu',
@@ -36,7 +36,7 @@ function hk_search_menu_default_menu_links() {
     'external' => 0,
     'has_children' => 0,
     'expanded' => 0,
-    'weight' => 1,
+    'weight' => -50,
     'customized' => 1,
     'language' => 'und',
     'menu_links_customized' => 1,
@@ -67,7 +67,7 @@ function hk_search_menu_default_menu_links() {
     'external' => 0,
     'has_children' => 0,
     'expanded' => 0,
-    'weight' => 2,
+    'weight' => -49,
     'customized' => 1,
     'language' => 'und',
     'menu_links_customized' => 1,

@@ -59,6 +59,7 @@ function hk_search_facetapi_default_facet_settings() {
       'roles' => array(),
       'bundle' => 'none',
       'bundle_selected' => array(),
+      'reverse_dependency' => FALSE,
     ),
     'facet_mincount' => '1',
     'facet_missing' => '0',
@@ -133,6 +134,7 @@ function hk_search_facetapi_default_facet_settings() {
       'facet_items_field_ausstattung' => '',
       'facet_items_field_zustand' => '',
       'facet_items_field_etagenzahl' => '',
+      'reverse_dependency' => FALSE,
     ),
     'facet_mincount' => '1',
     'facet_missing' => '0',
@@ -203,6 +205,7 @@ function hk_search_facetapi_default_facet_settings() {
       'facet_items_field_apart_category' => '',
       'facet_items_field_zustand' => '',
       'facet_items_field_etagenzahl' => '',
+      'reverse_dependency' => FALSE,
     ),
     'facet_mincount' => '1',
     'facet_missing' => '0',
@@ -224,25 +227,23 @@ function hk_search_facetapi_default_facet_settings() {
   $facet = new stdClass();
   $facet->disabled = FALSE; /* Edit this to true to make a default facet disabled initially */
   $facet->api_version = 1;
-  $facet->name = 'search_api@solr_node_index::field_object_ref:field_bezirk';
+  $facet->name = 'search_api@solr_node_index::field_bezirk';
   $facet->searcher = 'search_api@solr_node_index';
   $facet->realm = '';
-  $facet->facet = 'field_object_ref:field_bezirk';
+  $facet->facet = 'field_bezirk';
   $facet->enabled = FALSE;
   $facet->settings = array(
     'operator' => 'or',
     'hard_limit' => '50',
     'dependencies' => array(
       'facets' => array(),
+      'reverse_dependency' => FALSE,
       'force_deactivation' => TRUE,
       'regex' => FALSE,
-      'roles' => array(),
-      'bundle' => 'none',
-      'bundle_selected' => array(),
     ),
     'facet_mincount' => '1',
     'facet_missing' => '0',
-    'flatten' => '1',
+    'flatten' => '0',
     'individual_parent' => '0',
     'query_type' => 'term',
     'limit_active_items' => 1,
@@ -253,11 +254,8 @@ function hk_search_facetapi_default_facet_settings() {
       'search_api_views:karten:mieten' => 'search_api_views:karten:mieten',
     ),
     'exclude' => 0,
-    'pretty_paths_alias' => 'bezirk',
-    'pretty_paths_taxonomy_pathauto' => 0,
-    'pretty_paths_taxonomy_pathauto_vocabulary' => 'vocabulary_3',
   );
-  $export['search_api@solr_node_index::field_object_ref:field_bezirk'] = $facet;
+  $export['search_api@solr_node_index::field_bezirk'] = $facet;
 
   return $export;
 }

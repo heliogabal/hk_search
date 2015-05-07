@@ -41,30 +41,19 @@ function hk_search_default_search_api_index() {
     "name" : "Solr Node Index",
     "machine_name" : "solr_node_index",
     "description" : null,
-    "server" : "db_search",
+    "server" : "solr",
     "item_type" : "node",
     "options" : {
       "index_directly" : 1,
       "cron_limit" : "50",
       "fields" : {
-        "author" : { "type" : "integer", "entity_type" : "user" },
-        "changed" : { "type" : "date" },
-        "created" : { "type" : "date" },
-        "field_apart_bathrooms" : { "type" : "integer" },
-        "field_apart_floor" : { "type" : "text" },
-        "field_apart_hoa_fee" : { "type" : "decimal" },
         "field_apart_living_space" : { "type" : "decimal" },
         "field_apart_no" : { "type" : "text" },
         "field_apart_price" : { "type" : "decimal" },
         "field_apart_rooms" : { "type" : "integer" },
-        "field_ausstattung" : { "type" : "list\\u003Cinteger\\u003E", "entity_type" : "taxonomy_term" },
-        "field_heating_type" : { "type" : "string" },
+        "field_bezirk" : { "type" : "integer", "entity_type" : "taxonomy_term" },
         "field_kategorie" : { "type" : "integer", "entity_type" : "taxonomy_term" },
-        "field_object_ref" : { "type" : "integer", "entity_type" : "node" },
-        "field_object_ref:body:value" : { "type" : "text" },
         "field_object_ref:field_address:thoroughfare" : { "type" : "text" },
-        "field_object_ref:field_bezirk" : { "type" : "integer", "entity_type" : "taxonomy_term" },
-        "field_object_ref:field_kategorie" : { "type" : "integer", "entity_type" : "taxonomy_term" },
         "field_object_ref:field_object_images:file" : { "type" : "list\\u003Cinteger\\u003E", "entity_type" : "file" },
         "field_object_ref:field_object_images:file:fid" : { "type" : "list\\u003Cinteger\\u003E" },
         "field_object_ref:field_object_images:file:field_file_image_alt_text" : { "type" : "list\\u003Ctext\\u003E" },
@@ -74,11 +63,15 @@ function hk_search_default_search_api_index() {
         "field_object_ref:field_object_images:file:size" : { "type" : "list\\u003Cinteger\\u003E" },
         "field_object_ref:field_object_images:file:type" : { "type" : "list\\u003Cstring\\u003E" },
         "field_object_ref:field_object_images:file:url" : { "type" : "list\\u003Ctext\\u003E" },
-        "field_object_ref:field_objekt_wkt:latlon" : { "type" : "text" },
+        "field_object_ref:field_object_txt_map_popup:value" : { "type" : "text" },
+        "field_object_ref:field_objekt_wkt:geom" : { "type" : "string" },
         "field_object_ref:field_objektid_nunumeric" : { "type" : "text" },
+        "field_object_ref:field_save_workflow" : { "type" : "string" },
+        "field_object_ref:language" : { "type" : "string" },
+        "field_object_ref:nid" : { "type" : "integer" },
         "field_object_ref:status" : { "type" : "integer" },
         "field_object_ref:title_field" : { "type" : "text" },
-        "field_objekt_wkt:latlon" : { "type" : "text" },
+        "field_save_workflow" : { "type" : "string" },
         "is_new" : { "type" : "boolean" },
         "language" : { "type" : "string" },
         "search_api_language" : { "type" : "string" },
@@ -91,10 +84,7 @@ function hk_search_default_search_api_index() {
         "search_api_alter_bundle_filter" : {
           "status" : 1,
           "weight" : "-10",
-          "settings" : {
-            "default" : "0",
-            "bundles" : { "objekt" : "objekt", "apartment" : "apartment" }
-          }
+          "settings" : { "default" : "0", "bundles" : { "apartment" : "apartment" } }
         },
         "search_api_alter_node_access" : { "status" : 0, "weight" : "0", "settings" : [] },
         "search_api_alter_node_status" : { "status" : 0, "weight" : "0", "settings" : [] },
@@ -106,11 +96,11 @@ function hk_search_default_search_api_index() {
         "search_api_alter_add_hierarchy" : { "status" : 0, "weight" : "0", "settings" : { "fields" : [] } },
         "search_api_alter_add_url" : { "status" : 0, "weight" : "0", "settings" : [] },
         "search_api_alter_add_aggregation" : { "status" : 0, "weight" : "0", "settings" : [] },
-        "search_api_alter_add_viewed_entity" : { "status" : 0, "weight" : "0", "settings" : { "mode" : "full" } }
+        "search_api_alter_add_viewed_entity" : { "status" : 0, "weight" : "0", "settings" : { "mode" : "map_popup" } }
       },
       "processors" : {
         "search_api_case_ignore" : {
-          "status" : 1,
+          "status" : 0,
           "weight" : "0",
           "settings" : { "fields" : { "title" : true } }
         },
@@ -127,7 +117,7 @@ function hk_search_default_search_api_index() {
         "search_api_transliteration" : {
           "status" : 0,
           "weight" : "15",
-          "settings" : { "fields" : { "title" : true, "field_apart_floor" : true } }
+          "settings" : { "fields" : { "title" : true } }
         },
         "search_api_tokenizer" : {
           "status" : 1,
@@ -172,288 +162,26 @@ function hk_search_default_search_api_index() {
  */
 function hk_search_default_search_api_server() {
   $items = array();
-  $items['db_search'] = entity_import('search_api_server', '{
-    "name" : "DB Search",
-    "machine_name" : "db_search",
-    "description" : "Test Server to be replaced by SOLR afterwards",
-    "class" : "search_api_db_service",
+  $items['solr'] = entity_import('search_api_server', '{
+    "name" : "SOLR",
+    "machine_name" : "solr",
+    "description" : "",
+    "class" : "search_api_solr_service",
     "options" : {
-      "database" : "default:default",
-      "min_chars" : "3",
-      "partial_matches" : 0,
-      "autocomplete" : { "suggest_suffix" : 1, "suggest_words" : 1 },
-      "indexes" : {
-        "default_node_index" : {
-          "type" : {
-            "table" : "search_api_db_default_node_index",
-            "column" : "type",
-            "type" : "string",
-            "boost" : "1.0"
-          },
-          "title" : {
-            "table" : "search_api_db_default_node_index_text",
-            "type" : "text",
-            "boost" : "5.0"
-          },
-          "promote" : {
-            "table" : "search_api_db_default_node_index",
-            "column" : "promote",
-            "type" : "boolean",
-            "boost" : "1.0"
-          },
-          "sticky" : {
-            "table" : "search_api_db_default_node_index",
-            "column" : "sticky",
-            "type" : "boolean",
-            "boost" : "1.0"
-          },
-          "created" : {
-            "table" : "search_api_db_default_node_index",
-            "column" : "created",
-            "type" : "date",
-            "boost" : "1.0"
-          },
-          "changed" : {
-            "table" : "search_api_db_default_node_index",
-            "column" : "changed",
-            "type" : "date",
-            "boost" : "1.0"
-          },
-          "author" : {
-            "table" : "search_api_db_default_node_index",
-            "column" : "author",
-            "type" : "integer",
-            "boost" : "1.0"
-          },
-          "search_api_language" : {
-            "table" : "search_api_db_default_node_index",
-            "column" : "search_api_language",
-            "type" : "string",
-            "boost" : "1.0"
-          },
-          "body:value" : {
-            "table" : "search_api_db_default_node_index_text",
-            "type" : "text",
-            "boost" : "1.0"
-          }
-        },
-        "solr_node_index" : {
-          "is_new" : {
-            "table" : "search_api_db_solr_node_index",
-            "column" : "is_new",
-            "type" : "boolean",
-            "boost" : "1.0"
-          },
-          "type" : {
-            "table" : "search_api_db_solr_node_index",
-            "column" : "type",
-            "type" : "string",
-            "boost" : "1.0"
-          },
-          "title" : {
-            "table" : "search_api_db_solr_node_index_text",
-            "type" : "text",
-            "boost" : "1.0"
-          },
-          "language" : {
-            "table" : "search_api_db_solr_node_index",
-            "column" : "language",
-            "type" : "string",
-            "boost" : "1.0"
-          },
-          "status" : {
-            "table" : "search_api_db_solr_node_index",
-            "column" : "status",
-            "type" : "integer",
-            "boost" : "1.0"
-          },
-          "created" : {
-            "table" : "search_api_db_solr_node_index",
-            "column" : "created",
-            "type" : "date",
-            "boost" : "1.0"
-          },
-          "changed" : {
-            "table" : "search_api_db_solr_node_index",
-            "column" : "changed",
-            "type" : "date",
-            "boost" : "1.0"
-          },
-          "author" : {
-            "table" : "search_api_db_solr_node_index",
-            "column" : "author",
-            "type" : "integer",
-            "boost" : "1.0"
-          },
-          "field_apart_bathrooms" : {
-            "table" : "search_api_db_solr_node_index",
-            "column" : "field_apart_bathrooms",
-            "type" : "integer",
-            "boost" : "1.0"
-          },
-          "field_apart_floor" : {
-            "table" : "search_api_db_solr_node_index_text",
-            "type" : "text",
-            "boost" : "1.0"
-          },
-          "field_apart_hoa_fee" : {
-            "table" : "search_api_db_solr_node_index",
-            "column" : "field_apart_hoa_fee",
-            "type" : "decimal",
-            "boost" : "1.0"
-          },
-          "field_apart_living_space" : {
-            "table" : "search_api_db_solr_node_index",
-            "column" : "field_apart_living_space",
-            "type" : "decimal",
-            "boost" : "1.0"
-          },
-          "field_apart_no" : {
-            "table" : "search_api_db_solr_node_index_text",
-            "type" : "text",
-            "boost" : "1.0"
-          },
-          "field_apart_price" : {
-            "table" : "search_api_db_solr_node_index",
-            "column" : "field_apart_price",
-            "type" : "decimal",
-            "boost" : "1.0"
-          },
-          "field_apart_rooms" : {
-            "table" : "search_api_db_solr_node_index",
-            "column" : "field_apart_rooms",
-            "type" : "integer",
-            "boost" : "1.0"
-          },
-          "field_object_ref" : {
-            "table" : "search_api_db_solr_node_index",
-            "column" : "field_object_ref",
-            "type" : "integer",
-            "boost" : "1.0"
-          },
-          "field_ausstattung" : {
-            "table" : "search_api_db_solr_node_index_field_ausstattung",
-            "column" : "value",
-            "type" : "list\\u003Cinteger\\u003E",
-            "boost" : "1.0"
-          },
-          "field_kategorie" : {
-            "table" : "search_api_db_solr_node_index",
-            "column" : "field_kategorie",
-            "type" : "integer",
-            "boost" : "1.0"
-          },
-          "field_heating_type" : {
-            "table" : "search_api_db_solr_node_index",
-            "column" : "field_heating_type",
-            "type" : "string",
-            "boost" : "1.0"
-          },
-          "search_api_language" : {
-            "table" : "search_api_db_solr_node_index",
-            "column" : "search_api_language",
-            "type" : "string",
-            "boost" : "1.0"
-          },
-          "field_object_ref:status" : {
-            "table" : "search_api_db_solr_node_index",
-            "column" : "field_object_ref_status",
-            "type" : "integer",
-            "boost" : "1.0"
-          },
-          "field_object_ref:title_field" : {
-            "table" : "search_api_db_solr_node_index_text",
-            "type" : "text",
-            "boost" : "1.0"
-          },
-          "field_object_ref:field_kategorie" : {
-            "table" : "search_api_db_solr_node_index",
-            "column" : "field_object_ref_field_kategorie",
-            "type" : "integer",
-            "boost" : "1.0"
-          },
-          "field_object_ref:field_objektid_nunumeric" : {
-            "table" : "search_api_db_solr_node_index_text",
-            "type" : "text",
-            "boost" : "1.0"
-          },
-          "field_object_ref:field_bezirk" : {
-            "table" : "search_api_db_solr_node_index",
-            "column" : "field_object_ref_field_bezirk",
-            "type" : "integer",
-            "boost" : "1.0"
-          },
-          "field_objekt_wkt:latlon" : {
-            "table" : "search_api_db_solr_node_index_text",
-            "type" : "text",
-            "boost" : "1.0"
-          },
-          "field_object_ref:body:value" : {
-            "table" : "search_api_db_solr_node_index_text",
-            "type" : "text",
-            "boost" : "1.0"
-          },
-          "field_object_ref:field_objekt_wkt:latlon" : {
-            "table" : "search_api_db_solr_node_index_text",
-            "type" : "text",
-            "boost" : "1.0"
-          },
-          "field_object_ref:field_object_images:file" : {
-            "table" : "search_api_db_solr_node_index_field_object_ref_field_object_im",
-            "column" : "value",
-            "type" : "list\\u003Cinteger\\u003E",
-            "boost" : "1.0"
-          },
-          "field_object_ref:field_address:thoroughfare" : {
-            "table" : "search_api_db_solr_node_index_text",
-            "type" : "text",
-            "boost" : "1.0"
-          },
-          "field_object_ref:field_object_images:file:fid" : {
-            "table" : "search_api_db_solr_node_index_field_object_ref_field_object__1",
-            "column" : "value",
-            "type" : "list\\u003Cinteger\\u003E",
-            "boost" : "1.0"
-          },
-          "field_object_ref:field_object_images:file:name" : {
-            "table" : "search_api_db_solr_node_index_text",
-            "type" : "list\\u003Ctext\\u003E",
-            "boost" : "1.0"
-          },
-          "field_object_ref:field_object_images:file:mime" : {
-            "table" : "search_api_db_solr_node_index_text",
-            "type" : "list\\u003Ctext\\u003E",
-            "boost" : "1.0"
-          },
-          "field_object_ref:field_object_images:file:size" : {
-            "table" : "search_api_db_solr_node_index_field_object_ref_field_object__2",
-            "column" : "value",
-            "type" : "list\\u003Cinteger\\u003E",
-            "boost" : "1.0"
-          },
-          "field_object_ref:field_object_images:file:url" : {
-            "table" : "search_api_db_solr_node_index_text",
-            "type" : "list\\u003Ctext\\u003E",
-            "boost" : "1.0"
-          },
-          "field_object_ref:field_object_images:file:type" : {
-            "table" : "search_api_db_solr_node_index_field_object_ref_field_object__3",
-            "column" : "value",
-            "type" : "list\\u003Cstring\\u003E",
-            "boost" : "1.0"
-          },
-          "field_object_ref:field_object_images:file:field_file_image_alt_text" : {
-            "table" : "search_api_db_solr_node_index_text",
-            "type" : "list\\u003Ctext\\u003E",
-            "boost" : "1.0"
-          },
-          "field_object_ref:field_object_images:file:field_file_image_title_text" : {
-            "table" : "search_api_db_solr_node_index_text",
-            "type" : "list\\u003Ctext\\u003E",
-            "boost" : "1.0"
-          }
-        }
-      }
+      "clean_ids" : true,
+      "site_hash" : true,
+      "scheme" : "http",
+      "host" : "127.0.0.1",
+      "port" : "8099",
+      "path" : "\\/solr\\/d41d8cd98f00b204e9800998ecf8427e.hk.prod.drupalforgood.eu.o5571260507",
+      "http_user" : "",
+      "http_pass" : "",
+      "excerpt" : 0,
+      "retrieve_data" : 0,
+      "highlight_data" : 0,
+      "skip_schema_check" : 0,
+      "solr_version" : "",
+      "http_method" : "AUTO"
     },
     "enabled" : "1"
   }');
