@@ -173,7 +173,7 @@ function hk_search_default_search_api_server() {
       "scheme" : "http",
       "host" : "127.0.0.1",
       "port" : "8099",
-      "path" : "\\/solr\\/d41d8cd98f00b204e9800998ecf8427e.hk.prod.drupalforgood.eu.o5571260507",
+      "path" : "\\/solr\\/d41d8cd98f00b204e9800998ecf8427e.hk.phoenix.drupalforgood.eu.o5571260507",
       "http_user" : "",
       "http_pass" : "",
       "excerpt" : 0,
