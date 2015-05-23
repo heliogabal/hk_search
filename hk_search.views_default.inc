@@ -373,6 +373,7 @@ function hk_search_views_default_views() {
   $handler->display->display_options['fields']['field_object_ref_field_apart_pictures_file']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['field_object_ref_field_apart_pictures_file']['element_default_classes'] = FALSE;
   $handler->display->display_options['defaults']['sorts'] = FALSE;
+<<<<<<< HEAD
   /* Sort criterion: Indexed Node: Borough */
   $handler->display->display_options['sorts']['field_bezirk']['id'] = 'field_bezirk';
   $handler->display->display_options['sorts']['field_bezirk']['table'] = 'search_api_index_solr_node_index';
@@ -381,6 +382,12 @@ function hk_search_views_default_views() {
   $handler->display->display_options['sorts']['search_api_relevance']['id'] = 'search_api_relevance';
   $handler->display->display_options['sorts']['search_api_relevance']['table'] = 'search_api_index_solr_node_index';
   $handler->display->display_options['sorts']['search_api_relevance']['field'] = 'search_api_relevance';
+=======
+  /* Sort criterion: Global: Random */
+  $handler->display->display_options['sorts']['random']['id'] = 'random';
+  $handler->display->display_options['sorts']['random']['table'] = 'views';
+  $handler->display->display_options['sorts']['random']['field'] = 'random';
+>>>>>>> 5b62643863509a19b0c6acd16fe9cd3fccec6dcf
   $handler->display->display_options['defaults']['arguments'] = FALSE;
   /* Contextual filter: Search: Indexed taxonomy term fields */
   $handler->display->display_options['arguments']['search_api_views_taxonomy_term']['id'] = 'search_api_views_taxonomy_term';
