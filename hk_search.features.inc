@@ -44,17 +44,23 @@ function hk_search_default_search_api_index() {
     "server" : "solr",
     "item_type" : "node",
     "options" : {
+      "datasource" : { "bundles" : [] },
       "index_directly" : 1,
       "cron_limit" : "50",
       "fields" : {
+        "field_apart_kiez_schattenobjekt" : { "type" : "integer", "entity_type" : "node" },
         "field_apart_living_space" : { "type" : "decimal" },
         "field_apart_no" : { "type" : "text" },
         "field_apart_price" : { "type" : "decimal" },
+        "field_apart_regionbound_counter" : { "type" : "integer" },
         "field_apart_rooms" : { "type" : "integer" },
+        "field_apart_schattengebiet_wkt:geom" : { "type" : "string" },
         "field_bezirk" : { "type" : "integer", "entity_type" : "taxonomy_term" },
+        "field_geodaten_schattenwohnung:geom" : { "type" : "string" },
         "field_kategorie" : { "type" : "integer", "entity_type" : "taxonomy_term" },
         "field_object_ref:field_address:thoroughfare" : { "type" : "text" },
         "field_object_ref:field_obj_apartments:nid" : { "type" : "list\\u003Cinteger\\u003E" },
+        "field_object_ref:field_obj_schattenobjekt" : { "type" : "string" },
         "field_object_ref:field_object_images:file" : { "type" : "list\\u003Cinteger\\u003E", "entity_type" : "file" },
         "field_object_ref:field_object_images:file:fid" : { "type" : "list\\u003Cinteger\\u003E" },
         "field_object_ref:field_object_images:file:field_file_image_alt_text" : { "type" : "list\\u003Ctext\\u003E" },
@@ -77,7 +83,6 @@ function hk_search_default_search_api_index() {
         "language" : { "type" : "string" },
         "search_api_language" : { "type" : "string" },
         "status" : { "type" : "integer" },
-        "title" : { "type" : "text" },
         "type" : { "type" : "string" }
       },
       "data_alter_callbacks" : {
