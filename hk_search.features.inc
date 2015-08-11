@@ -97,7 +97,10 @@ function hk_search_default_search_api_index() {
         "search_api_alter_language_control" : {
           "status" : 1,
           "weight" : "0",
-          "settings" : { "lang_field" : "language", "languages" : { "de" : "de", "en" : "en" } }
+          "settings" : {
+            "lang_field" : "language",
+            "languages" : { "de" : "de", "en" : "en", "zh-hans" : "zh-hans" }
+          }
         },
         "search_api_alter_add_hierarchy" : { "status" : 0, "weight" : "0", "settings" : { "fields" : [] } },
         "search_api_alter_add_url" : { "status" : 0, "weight" : "0", "settings" : [] },
@@ -105,40 +108,28 @@ function hk_search_default_search_api_index() {
         "search_api_alter_add_viewed_entity" : { "status" : 0, "weight" : "0", "settings" : { "mode" : "map_popup" } }
       },
       "processors" : {
-        "search_api_case_ignore" : {
-          "status" : 0,
-          "weight" : "0",
-          "settings" : { "fields" : { "title" : true } }
-        },
+        "search_api_case_ignore" : { "status" : 0, "weight" : "0", "settings" : { "fields" : [] } },
         "search_api_html_filter" : {
           "status" : 1,
           "weight" : "10",
           "settings" : {
-            "fields" : { "title" : true },
+            "fields" : [],
             "title" : 0,
             "alt" : 1,
             "tags" : "h1 = 5\\r\\nh2 = 3\\r\\nh3 = 2\\r\\nstrong = 2\\r\\nb = 2\\r\\nem = 1.5\\r\\nu = 1.5"
           }
         },
-        "search_api_transliteration" : {
-          "status" : 0,
-          "weight" : "15",
-          "settings" : { "fields" : { "title" : true } }
-        },
+        "search_api_transliteration" : { "status" : 0, "weight" : "15", "settings" : { "fields" : [] } },
         "search_api_tokenizer" : {
           "status" : 1,
           "weight" : "20",
-          "settings" : {
-            "fields" : { "title" : true },
-            "spaces" : "[^[:alnum:]]",
-            "ignorable" : "[\\u0027]"
-          }
+          "settings" : { "fields" : [], "spaces" : "[^[:alnum:]]", "ignorable" : "[\\u0027]" }
         },
         "search_api_stopwords" : {
           "status" : 0,
           "weight" : "30",
           "settings" : {
-            "fields" : { "title" : true },
+            "fields" : [],
             "file" : "",
             "stopwords" : "but\\r\\ndid\\r\\nthe this that those\\r\\netc"
           }

@@ -46,7 +46,7 @@ function hk_search_views_default_views() {
       'rendered_strip' => 0,
     ),
   );
-  $handler->display->display_options['style_options']['map'] = 'leaflet-mapbox';
+  $handler->display->display_options['style_options']['map'] = 'leaflet-mapbox-0';
   $handler->display->display_options['style_options']['map_height'] = '600';
   $handler->display->display_options['style_options']['ip_geoloc_views_plugin_latitude'] = array(
     'field_objekt_wkt' => 'field_objekt_wkt',
@@ -80,7 +80,7 @@ function hk_search_views_default_views() {
     1 => '',
     2 => '',
   );
-  $handler->display->display_options['style_options']['cluster_differentiator']['cluster_tooltips'] = 1;
+  $handler->display->display_options['style_options']['cluster_differentiator']['cluster_tooltips'] = 0;
   $handler->display->display_options['style_options']['cluster_differentiator']['cluster_outline'] = '1';
   $handler->display->display_options['style_options']['cluster_aggregation']['aggregation_field'] = 'field_apart_regionbound_counter';
   $handler->display->display_options['style_options']['cluster_aggregation']['aggregation_function'] = 'sum';
@@ -269,13 +269,14 @@ function hk_search_views_default_views() {
   $handler->display->display_options['filters']['type']['value'] = array(
     'apartment' => 'apartment',
   );
-  /* Filterkriterium: Indizierter Beitrag: Status */
-  $handler->display->display_options['filters']['status']['id'] = 'status';
-  $handler->display->display_options['filters']['status']['table'] = 'search_api_index_solr_node_index';
-  $handler->display->display_options['filters']['status']['field'] = 'status';
-  $handler->display->display_options['filters']['status']['value'] = array(
-    1 => '1',
-    0 => '0',
+  /* Filterkriterium: Object: Status (indexed) */
+  $handler->display->display_options['filters']['field_object_ref_field_save_workflow']['id'] = 'field_object_ref_field_save_workflow';
+  $handler->display->display_options['filters']['field_object_ref_field_save_workflow']['table'] = 'search_api_index_solr_node_index';
+  $handler->display->display_options['filters']['field_object_ref_field_save_workflow']['field'] = 'field_object_ref_field_save_workflow';
+  $handler->display->display_options['filters']['field_object_ref_field_save_workflow']['value'] = array(
+    2 => '2',
+    3 => '3',
+    4 => '4',
   );
   $handler->display->display_options['use_ajax_flags'] = array(
     'merken' => 'merken',
