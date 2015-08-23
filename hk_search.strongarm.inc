@@ -101,6 +101,7 @@ rent';
     'solr_apartment_index' => array(
       'search_api_views:solr_map_apartments:default' => 'search_api_views:solr_map_apartments:default',
       'search_api_views:solr_map_apartments:page' => 'search_api_views:solr_map_apartments:page',
+      'search_api_views:frontpage_map:page' => 'search_api_views:frontpage_map:page',
     ),
     'denormalized_aapart_index' => array(
       'search_api_views:grouped_apartments_map:default' => 'search_api_views:grouped_apartments_map:default',
