@@ -169,7 +169,7 @@ function hk_search_views_default_views() {
   $handler->display->display_options['fields']['field_obj_apartments']['exclude'] = TRUE;
   $handler->display->display_options['fields']['field_obj_apartments']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['field_obj_apartments']['list']['mode'] = 'count';
-  $handler->display->display_options['fields']['field_obj_apartments']['link_to_entity'] = 1;
+  $handler->display->display_options['fields']['field_obj_apartments']['link_to_entity'] = 0;
   $handler->display->display_options['fields']['field_obj_apartments']['view_mode'] = 'full';
   $handler->display->display_options['fields']['field_obj_apartments']['bypass_access'] = 0;
   /* Feld: Text Popup rewrite */
@@ -182,7 +182,7 @@ function hk_search_views_default_views() {
   $handler->display->display_options['fields']['field_object_ref_field_object_txt_map_popup_value']['alter']['text'] = '[field_object_images]
 <!--<h2>[field_object_ref_title_field]</h2>-->
 <p>[field_object_ref_field_object_txt_map_popup_value]</p>
-<p>[fild_obj_apartments] apartments in total</p>
+<p>[field_obj_apartments] apartments in total</p>
 <div class="wo"><i class="icon-hk-icon-location"></i>[field_object_ref_field_address_thoroughfare] [field_bezirk]</div>
 <div class="tablehead"><span class="id">Object ID</span><span class="rooms">Rooms</span><span class="space">Space (ca.)</span><span class="price">Price</span><span class="more">&nbsp;</span></div>';
   $handler->display->display_options['fields']['field_object_ref_field_object_txt_map_popup_value']['element_label_colon'] = FALSE;
@@ -256,18 +256,6 @@ function hk_search_views_default_views() {
   $handler->display->display_options['fields']['field_objekt_wkt']['settings'] = array(
     'data' => 'full',
   );
-  /* Feld: Indexed Node: Wohnungszahl Regionbound Zähler */
-  $handler->display->display_options['fields']['field_apart_regionbound_counter']['id'] = 'field_apart_regionbound_counter';
-  $handler->display->display_options['fields']['field_apart_regionbound_counter']['table'] = 'search_api_index_solr_node_index';
-  $handler->display->display_options['fields']['field_apart_regionbound_counter']['field'] = 'field_apart_regionbound_counter';
-  $handler->display->display_options['fields']['field_apart_regionbound_counter']['label'] = '';
-  $handler->display->display_options['fields']['field_apart_regionbound_counter']['exclude'] = TRUE;
-  $handler->display->display_options['fields']['field_apart_regionbound_counter']['element_label_colon'] = FALSE;
-  $handler->display->display_options['fields']['field_apart_regionbound_counter']['type'] = 'number_unformatted';
-  $handler->display->display_options['fields']['field_apart_regionbound_counter']['settings'] = array(
-    'thousand_separator' => '',
-    'prefix_suffix' => 0,
-  );
   /* Feld: Indexed Node: Schattengebiet WKT */
   $handler->display->display_options['fields']['field_apart_schattengebiet_wkt']['id'] = 'field_apart_schattengebiet_wkt';
   $handler->display->display_options['fields']['field_apart_schattengebiet_wkt']['table'] = 'search_api_index_solr_node_index';
@@ -286,20 +274,49 @@ function hk_search_views_default_views() {
   $handler->display->display_options['filters']['type']['value'] = array(
     'apartment' => 'apartment',
   );
-  /* Filterkriterium: Object: Status (indexed) */
-  $handler->display->display_options['filters']['field_object_ref_field_save_workflow']['id'] = 'field_object_ref_field_save_workflow';
-  $handler->display->display_options['filters']['field_object_ref_field_save_workflow']['table'] = 'search_api_index_solr_node_index';
-  $handler->display->display_options['filters']['field_object_ref_field_save_workflow']['field'] = 'field_object_ref_field_save_workflow';
-  $handler->display->display_options['filters']['field_object_ref_field_save_workflow']['value'] = array(
-    2 => '2',
-    3 => '3',
-    4 => '4',
+  $handler->display->display_options['filters']['type']['group'] = 1;
+  /* Filterkriterium: Indexed Node: Status */
+  $handler->display->display_options['filters']['status']['id'] = 'status';
+  $handler->display->display_options['filters']['status']['table'] = 'search_api_index_solr_node_index';
+  $handler->display->display_options['filters']['status']['field'] = 'status';
+  $handler->display->display_options['filters']['status']['value'] = array(
+    1 => '1',
   );
+  $handler->display->display_options['filters']['status']['group'] = 1;
+  /* Filterkriterium: Object » Apartments: Status (indexed) */
+  $handler->display->display_options['filters']['field_object_ref_field_obj_apartments_status']['id'] = 'field_object_ref_field_obj_apartments_status';
+  $handler->display->display_options['filters']['field_object_ref_field_obj_apartments_status']['table'] = 'search_api_index_solr_node_index';
+  $handler->display->display_options['filters']['field_object_ref_field_obj_apartments_status']['field'] = 'field_object_ref_field_obj_apartments_status';
+  $handler->display->display_options['filters']['field_object_ref_field_obj_apartments_status']['value'] = array(
+    1 => '1',
+  );
+  $handler->display->display_options['filters']['field_object_ref_field_obj_apartments_status']['group'] = 1;
+  /* Filterkriterium: Indexed Node: Schattenobjekt? */
+  $handler->display->display_options['filters']['field_obj_schattenobjekt']['id'] = 'field_obj_schattenobjekt';
+  $handler->display->display_options['filters']['field_obj_schattenobjekt']['table'] = 'search_api_index_solr_node_index';
+  $handler->display->display_options['filters']['field_obj_schattenobjekt']['field'] = 'field_obj_schattenobjekt';
+  $handler->display->display_options['filters']['field_obj_schattenobjekt']['operator'] = '<>';
+  $handler->display->display_options['filters']['field_obj_schattenobjekt']['value'] = array(
+    1 => '1',
+    2 => '2',
+  );
+  $handler->display->display_options['filters']['field_obj_schattenobjekt']['group'] = 1;
+  /* Filterkriterium: Object: Schattenobjekt? (indexed) */
+  $handler->display->display_options['filters']['field_object_ref_field_obj_schattenobjekt']['id'] = 'field_object_ref_field_obj_schattenobjekt';
+  $handler->display->display_options['filters']['field_object_ref_field_obj_schattenobjekt']['table'] = 'search_api_index_solr_node_index';
+  $handler->display->display_options['filters']['field_object_ref_field_obj_schattenobjekt']['field'] = 'field_object_ref_field_obj_schattenobjekt';
+  $handler->display->display_options['filters']['field_object_ref_field_obj_schattenobjekt']['operator'] = '<>';
+  $handler->display->display_options['filters']['field_object_ref_field_obj_schattenobjekt']['value'] = array(
+    1 => '1',
+    2 => '2',
+  );
+  $handler->display->display_options['filters']['field_object_ref_field_obj_schattenobjekt']['group'] = 1;
   /* Filterkriterium: Object » Standort: Well-known text (indexed) */
   $handler->display->display_options['filters']['field_object_ref_field_objekt_wkt_geom']['id'] = 'field_object_ref_field_objekt_wkt_geom';
   $handler->display->display_options['filters']['field_object_ref_field_objekt_wkt_geom']['table'] = 'search_api_index_solr_node_index';
   $handler->display->display_options['filters']['field_object_ref_field_objekt_wkt_geom']['field'] = 'field_object_ref_field_objekt_wkt_geom';
   $handler->display->display_options['filters']['field_object_ref_field_objekt_wkt_geom']['operator'] = 'not empty';
+  $handler->display->display_options['filters']['field_object_ref_field_objekt_wkt_geom']['group'] = 1;
   $handler->display->display_options['use_ajax_flags'] = array(
     'merken' => 'merken',
     'bookmarks' => 0,
@@ -386,6 +403,68 @@ function hk_search_views_default_views() {
   /* Display: Map Background Block */
   $handler = $view->new_display('block', 'Map Background Block', 'map_block');
   $handler->display->display_options['display_description'] = 'Karte als Hintergrund für alle Seiten außer Front, per views_embed in page.tpl.php eingebunden';
+  $handler->display->display_options['defaults']['style_plugin'] = FALSE;
+  $handler->display->display_options['style_plugin'] = 'ip_geoloc_leaflet';
+  $handler->display->display_options['style_options']['grouping'] = array(
+    0 => array(
+      'field' => 'field_object_ref_field_object_txt_map_popup_value',
+      'rendered' => 1,
+      'rendered_strip' => 0,
+    ),
+  );
+  $handler->display->display_options['style_options']['map'] = 'leaflet-mapbox-0';
+  $handler->display->display_options['style_options']['map_height'] = '600';
+  $handler->display->display_options['style_options']['ip_geoloc_views_plugin_latitude'] = array(
+    'field_objekt_wkt' => 'field_objekt_wkt',
+    'field_apart_schattengebiet_wkt' => 'field_apart_schattengebiet_wkt',
+  );
+  $handler->display->display_options['style_options']['ip_geoloc_views_plugin_longitude'] = '';
+  $handler->display->display_options['style_options']['default_marker']['default_marker_color'] = 'Icon_House2';
+  $handler->display->display_options['style_options']['center_option'] = '0';
+  $handler->display->display_options['style_options']['tags']['marker_tag'] = 'field_obj_apartments';
+  $handler->display->display_options['style_options']['tags']['tag_css_class'] = 'tag-below-marker';
+  $handler->display->display_options['style_options']['tooltips']['marker_tooltip'] = 'field_object_ref_title_field';
+  $handler->display->display_options['style_options']['sync']['2'] = 0;
+  $handler->display->display_options['style_options']['sync']['4'] = 0;
+  $handler->display->display_options['style_options']['sync']['8'] = 1;
+  $handler->display->display_options['style_options']['sync']['16'] = 1;
+  $handler->display->display_options['style_options']['full_screen'] = 0;
+  $handler->display->display_options['style_options']['scale_metric'] = 0;
+  $handler->display->display_options['style_options']['scale_imperial'] = 0;
+  $handler->display->display_options['style_options']['zoom_indicator'] = 0;
+  $handler->display->display_options['style_options']['map_reset'] = 0;
+  $handler->display->display_options['style_options']['map_cluster_toggle'] = 0;
+  $handler->display->display_options['style_options']['mini_map']['on'] = 0;
+  $handler->display->display_options['style_options']['mini_map']['height'] = '100';
+  $handler->display->display_options['style_options']['mini_map']['width'] = '150';
+  $handler->display->display_options['style_options']['mini_map']['toggle'] = 1;
+  $handler->display->display_options['style_options']['mini_map']['zoom_delta'] = '-5';
+  $handler->display->display_options['style_options']['cluster_radius'] = '50';
+  $handler->display->display_options['style_options']['disable_clustering_at_zoom'] = '18';
+  $handler->display->display_options['style_options']['cluster_differentiator']['cluster_differentiator_fields'] = array(
+    'field_bezirk' => 'field_bezirk',
+  );
+  $handler->display->display_options['style_options']['cluster_differentiator']['zoom_ranges'] = array(
+    1 => '1--11',
+    2 => '12--16',
+    3 => '17--18',
+  );
+  $handler->display->display_options['style_options']['cluster_differentiator']['cluster_tooltips'] = 1;
+  $handler->display->display_options['style_options']['cluster_differentiator']['cluster_outline'] = '1';
+  $handler->display->display_options['style_options']['cluster_aggregation']['aggregation_field'] = 'field_obj_apartments';
+  $handler->display->display_options['style_options']['cluster_aggregation']['aggregation_function'] = 'sum';
+  $handler->display->display_options['style_options']['cluster_aggregation']['ranges']['small'] = '10';
+  $handler->display->display_options['style_options']['cluster_aggregation']['ranges']['medium'] = '25';
+  $handler->display->display_options['style_options']['cluster_aggregation']['ranges']['large'] = '50';
+  $handler->display->display_options['style_options']['empty_map_center'] = '52.541143, 13.414810';
+  $handler->display->display_options['style_options']['map_options']['maxzoom'] = '18';
+  $handler->display->display_options['style_options']['map_options']['zoom'] = '12';
+  $handler->display->display_options['style_options']['map_options']['scrollwheelzoom'] = '1';
+  $handler->display->display_options['style_options']['map_options']['dragging'] = '1';
+  $handler->display->display_options['style_options']['map_options']['separator'] = '';
+  $handler->display->display_options['defaults']['style_options'] = FALSE;
+  $handler->display->display_options['defaults']['row_plugin'] = FALSE;
+  $handler->display->display_options['defaults']['row_options'] = FALSE;
 
   /* Display: Kaufen */
   $handler = $view->new_display('page', 'Kaufen', 'kaufen');
@@ -553,6 +632,13 @@ function hk_search_views_default_views() {
     133 => '133',
   );
   $handler->display->display_options['filters']['field_kategorie']['group'] = 1;
+  /* Filterkriterium: Indexed Node: Status */
+  $handler->display->display_options['filters']['status']['id'] = 'status';
+  $handler->display->display_options['filters']['status']['table'] = 'search_api_index_solr_node_index';
+  $handler->display->display_options['filters']['status']['field'] = 'status';
+  $handler->display->display_options['filters']['status']['value'] = array(
+    1 => '1',
+  );
   $handler->display->display_options['path'] = 'buy';
 
   /* Display: Mieten */
@@ -882,6 +968,13 @@ function hk_search_views_default_views() {
   $handler->display->display_options['filters']['language']['id'] = 'language';
   $handler->display->display_options['filters']['language']['table'] = 'search_api_index_solr_node_index';
   $handler->display->display_options['filters']['language']['field'] = 'language';
+  /* Filterkriterium: Indexed Node: Status */
+  $handler->display->display_options['filters']['status']['id'] = 'status';
+  $handler->display->display_options['filters']['status']['table'] = 'search_api_index_solr_node_index';
+  $handler->display->display_options['filters']['status']['field'] = 'status';
+  $handler->display->display_options['filters']['status']['value'] = array(
+    1 => '1',
+  );
   $export['karten'] = $view;
 
   return $export;
