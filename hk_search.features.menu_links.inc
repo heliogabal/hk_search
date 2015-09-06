@@ -41,42 +41,10 @@ function hk_search_menu_default_menu_links() {
     'language' => 'und',
     'menu_links_customized' => 1,
   );
-  // Exported menu link: main-menu_rent:rent
-  $menu_links['main-menu_rent:rent'] = array(
-    'menu_name' => 'main-menu',
-    'link_path' => 'rent',
-    'router_path' => 'rent',
-    'link_title' => 'Rent',
-    'options' => array(
-      'icon' => array(
-        'icon' => '',
-        'position' => 'title_before',
-        'title_wrapper_element' => 'span',
-        'title_wrapper_class' => 'title',
-        'breadcrumb' => 0,
-        'title_wrapper' => 0,
-      ),
-      'attributes' => array(
-        'title' => '',
-      ),
-      'alter' => TRUE,
-      'identifier' => 'main-menu_rent:rent',
-    ),
-    'module' => 'menu',
-    'hidden' => 0,
-    'external' => 0,
-    'has_children' => 0,
-    'expanded' => 0,
-    'weight' => -49,
-    'customized' => 1,
-    'language' => 'und',
-    'menu_links_customized' => 1,
-  );
 
   // Translatables
   // Included for use with string extractors like potx.
   t('Buy');
-  t('Rent');
 
   return $menu_links;
 }
