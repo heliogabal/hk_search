@@ -91,6 +91,9 @@ rent';
       'search_api_views:karten:mlt' => 'search_api_views:karten:mlt',
       'search_api_views:karten:feed_1' => 'search_api_views:karten:feed_1',
       'search_api_views:karten:geojson' => 'search_api_views:karten:geojson',
+      'search_api_views:karten:freehold' => 'search_api_views:karten:freehold',
+      'search_api_views:karten:invest' => 'search_api_views:karten:invest',
+      'search_api_views:karten:commercial' => 'search_api_views:karten:commercial',
     ),
     'solr_objekt_index' => array(
       'search_api_views:hk_map_and_search:default' => 'search_api_views:hk_map_and_search:default',
