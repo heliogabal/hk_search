@@ -25,7 +25,11 @@ function hk_search_views_default_views() {
   $handler->display->display_options['use_ajax'] = TRUE;
   $handler->display->display_options['use_more_always'] = FALSE;
   $handler->display->display_options['access']['type'] = 'perm';
-  $handler->display->display_options['cache']['type'] = 'none-accelerated';
+  $handler->display->display_options['cache']['type'] = 'search_api_views_cache';
+  $handler->display->display_options['cache']['results_lifespan'] = '3600';
+  $handler->display->display_options['cache']['results_lifespan_custom'] = '0';
+  $handler->display->display_options['cache']['output_lifespan'] = '3600';
+  $handler->display->display_options['cache']['output_lifespan_custom'] = '0';
   $handler->display->display_options['query']['type'] = 'views_query';
   $handler->display->display_options['query']['options']['search_api_bypass_access'] = 0;
   $handler->display->display_options['query']['options']['entity_access'] = 0;
@@ -67,15 +71,15 @@ function hk_search_views_default_views() {
   $handler->display->display_options['style_options']['mini_map']['width'] = '150';
   $handler->display->display_options['style_options']['mini_map']['toggle'] = 1;
   $handler->display->display_options['style_options']['mini_map']['zoom_delta'] = '-5';
-  $handler->display->display_options['style_options']['cluster_radius'] = '150';
+  $handler->display->display_options['style_options']['cluster_radius'] = '200';
   $handler->display->display_options['style_options']['disable_clustering_at_zoom'] = '18';
   $handler->display->display_options['style_options']['cluster_differentiator']['cluster_differentiator_fields'] = array(
     'field_bezirk' => 'field_bezirk',
   );
   $handler->display->display_options['style_options']['cluster_differentiator']['zoom_ranges'] = array(
-    1 => '1--10',
-    2 => '11--15',
-    3 => '16--17',
+    1 => '1--11',
+    2 => '12--16',
+    3 => '17--18',
   );
   $handler->display->display_options['style_options']['cluster_differentiator']['cluster_tooltips'] = 1;
   $handler->display->display_options['style_options']['cluster_differentiator']['cluster_outline'] = '1';
@@ -121,6 +125,16 @@ function hk_search_views_default_views() {
   $handler->display->display_options['fields']['field_object_ref_title_field']['label'] = '';
   $handler->display->display_options['fields']['field_object_ref_title_field']['exclude'] = TRUE;
   $handler->display->display_options['fields']['field_object_ref_title_field']['element_label_colon'] = FALSE;
+  /* Field: Indexed Content: Borough */
+  $handler->display->display_options['fields']['field_bezirk']['id'] = 'field_bezirk';
+  $handler->display->display_options['fields']['field_bezirk']['table'] = 'search_api_index_solr_node_index';
+  $handler->display->display_options['fields']['field_bezirk']['field'] = 'field_bezirk';
+  $handler->display->display_options['fields']['field_bezirk']['label'] = '';
+  $handler->display->display_options['fields']['field_bezirk']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['field_bezirk']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['field_bezirk']['link_to_entity'] = 0;
+  $handler->display->display_options['fields']['field_bezirk']['view_mode'] = 'full';
+  $handler->display->display_options['fields']['field_bezirk']['bypass_access'] = 0;
   /* Field: Content: Object images */
   $handler->display->display_options['fields']['field_object_images']['id'] = 'field_object_images';
   $handler->display->display_options['fields']['field_object_images']['table'] = 'entity_node';
@@ -157,32 +171,22 @@ function hk_search_views_default_views() {
   $handler->display->display_options['fields']['field_object_ref_field_address_thoroughfare']['element_default_classes'] = FALSE;
   $handler->display->display_options['fields']['field_object_ref_field_address_thoroughfare']['hide_empty'] = TRUE;
   $handler->display->display_options['fields']['field_object_ref_field_address_thoroughfare']['link_to_entity'] = 0;
-  /* Field: Indexed Content: Borough */
-  $handler->display->display_options['fields']['field_bezirk']['id'] = 'field_bezirk';
-  $handler->display->display_options['fields']['field_bezirk']['table'] = 'search_api_index_solr_node_index';
-  $handler->display->display_options['fields']['field_bezirk']['field'] = 'field_bezirk';
-  $handler->display->display_options['fields']['field_bezirk']['label'] = '';
-  $handler->display->display_options['fields']['field_bezirk']['exclude'] = TRUE;
-  $handler->display->display_options['fields']['field_bezirk']['element_label_colon'] = FALSE;
-  $handler->display->display_options['fields']['field_bezirk']['link_to_entity'] = 0;
-  $handler->display->display_options['fields']['field_bezirk']['view_mode'] = 'full';
-  $handler->display->display_options['fields']['field_bezirk']['bypass_access'] = 0;
-  /* Field: Indexed Content: Address » Postal code */
-  $handler->display->display_options['fields']['field_address_postal_code']['id'] = 'field_address_postal_code';
-  $handler->display->display_options['fields']['field_address_postal_code']['table'] = 'search_api_index_solr_node_index';
-  $handler->display->display_options['fields']['field_address_postal_code']['field'] = 'field_address_postal_code';
-  $handler->display->display_options['fields']['field_address_postal_code']['label'] = '';
-  $handler->display->display_options['fields']['field_address_postal_code']['exclude'] = TRUE;
-  $handler->display->display_options['fields']['field_address_postal_code']['element_label_colon'] = FALSE;
-  $handler->display->display_options['fields']['field_address_postal_code']['link_to_entity'] = 0;
-  /* Field: Indexed Content: Address » Locality (i.e. City) */
-  $handler->display->display_options['fields']['field_address_locality']['id'] = 'field_address_locality';
-  $handler->display->display_options['fields']['field_address_locality']['table'] = 'search_api_index_solr_node_index';
-  $handler->display->display_options['fields']['field_address_locality']['field'] = 'field_address_locality';
-  $handler->display->display_options['fields']['field_address_locality']['label'] = '';
-  $handler->display->display_options['fields']['field_address_locality']['exclude'] = TRUE;
-  $handler->display->display_options['fields']['field_address_locality']['element_label_colon'] = FALSE;
-  $handler->display->display_options['fields']['field_address_locality']['link_to_entity'] = 0;
+  /* Field: Object » Address: Postal code (indexed) */
+  $handler->display->display_options['fields']['field_object_ref_field_address_postal_code']['id'] = 'field_object_ref_field_address_postal_code';
+  $handler->display->display_options['fields']['field_object_ref_field_address_postal_code']['table'] = 'search_api_index_solr_node_index';
+  $handler->display->display_options['fields']['field_object_ref_field_address_postal_code']['field'] = 'field_object_ref_field_address_postal_code';
+  $handler->display->display_options['fields']['field_object_ref_field_address_postal_code']['label'] = '';
+  $handler->display->display_options['fields']['field_object_ref_field_address_postal_code']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['field_object_ref_field_address_postal_code']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['field_object_ref_field_address_postal_code']['link_to_entity'] = 0;
+  /* Field: Object » Address: Locality (i.e. City) (indexed) */
+  $handler->display->display_options['fields']['field_object_ref_field_address_locality']['id'] = 'field_object_ref_field_address_locality';
+  $handler->display->display_options['fields']['field_object_ref_field_address_locality']['table'] = 'search_api_index_solr_node_index';
+  $handler->display->display_options['fields']['field_object_ref_field_address_locality']['field'] = 'field_object_ref_field_address_locality';
+  $handler->display->display_options['fields']['field_object_ref_field_address_locality']['label'] = '';
+  $handler->display->display_options['fields']['field_object_ref_field_address_locality']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['field_object_ref_field_address_locality']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['field_object_ref_field_address_locality']['link_to_entity'] = 0;
   /* Field: Content: Apartments */
   $handler->display->display_options['fields']['field_obj_apartments']['id'] = 'field_obj_apartments';
   $handler->display->display_options['fields']['field_obj_apartments']['table'] = 'entity_node';
@@ -214,7 +218,7 @@ function hk_search_views_default_views() {
 <!--<h2>[field_object_ref_title_field]</h2>-->
 <p>[field_object_ref_field_object_txt_map_popup_value]</p>
 <!--<p>[field_obj_apartments] apartments in total</p>-->
-<div class="wo"><i class="icon-hk-icon-location"></i>[field_object_ref_field_address_thoroughfare], [field_address_postal_code] [field_address_locality] </div>
+<div class="wo"><i class="icon-hk-icon-location"></i>[field_object_ref_field_address_thoroughfare], [field_object_ref_field_address_postal_code] [field_object_ref_field_address_locality]</div>
 <div class="tablehead"><span class="id">Object ID</span><span class="rooms">Rooms</span><span class="space">Space (ca.)</span><span class="price">Price</span><span class="more">&nbsp;</span></div>';
   $handler->display->display_options['fields']['field_object_ref_field_object_txt_map_popup_value']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['field_object_ref_field_object_txt_map_popup_value']['link_to_entity'] = 0;
@@ -324,17 +328,6 @@ function hk_search_views_default_views() {
   $handler->display->display_options['fields']['field_objekt_wkt']['hide_empty'] = TRUE;
   $handler->display->display_options['fields']['field_objekt_wkt']['click_sort_column'] = 'geom';
   $handler->display->display_options['fields']['field_objekt_wkt']['settings'] = array(
-    'data' => 'full',
-  );
-  /* Field: Indexed Content: Schattengebiet WKT */
-  $handler->display->display_options['fields']['field_apart_schattengebiet_wkt']['id'] = 'field_apart_schattengebiet_wkt';
-  $handler->display->display_options['fields']['field_apart_schattengebiet_wkt']['table'] = 'search_api_index_solr_node_index';
-  $handler->display->display_options['fields']['field_apart_schattengebiet_wkt']['field'] = 'field_apart_schattengebiet_wkt';
-  $handler->display->display_options['fields']['field_apart_schattengebiet_wkt']['label'] = '';
-  $handler->display->display_options['fields']['field_apart_schattengebiet_wkt']['exclude'] = TRUE;
-  $handler->display->display_options['fields']['field_apart_schattengebiet_wkt']['element_label_colon'] = FALSE;
-  $handler->display->display_options['fields']['field_apart_schattengebiet_wkt']['click_sort_column'] = 'geom';
-  $handler->display->display_options['fields']['field_apart_schattengebiet_wkt']['settings'] = array(
     'data' => 'full',
   );
   /* Filter criterion: Indexed Content: Content type */
@@ -1649,6 +1642,8 @@ function hk_search_views_default_views() {
   $handler->display->display_options['defaults']['css_class'] = FALSE;
   $handler->display->display_options['css_class'] = 'kaufen';
   $handler->display->display_options['display_description'] = 'Listensuche, als Page unter /buy /kaufen eingebunden';
+  $handler->display->display_options['defaults']['cache'] = FALSE;
+  $handler->display->display_options['cache']['type'] = 'none-accelerated';
   $handler->display->display_options['defaults']['pager'] = FALSE;
   $handler->display->display_options['pager']['type'] = 'full';
   $handler->display->display_options['pager']['options']['items_per_page'] = '10';
@@ -1792,6 +1787,7 @@ function hk_search_views_default_views() {
   $handler->display->display_options['filters']['status']['field'] = 'status';
   $handler->display->display_options['filters']['status']['value'] = array(
     1 => '1',
+    0 => '0',
   );
   $handler->display->display_options['filters']['status']['group'] = 1;
   /* Filter criterion: Indexed Content: Schattenobjekt? */

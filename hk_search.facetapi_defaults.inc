@@ -13,37 +13,6 @@ function hk_search_facetapi_default_facet_settings() {
   $facet = new stdClass();
   $facet->disabled = FALSE; /* Edit this to true to make a default facet disabled initially */
   $facet->api_version = 1;
-  $facet->name = 'search_api@solr_node_index::field_apart_category';
-  $facet->searcher = 'search_api@solr_node_index';
-  $facet->realm = '';
-  $facet->facet = 'field_apart_category';
-  $facet->enabled = FALSE;
-  $facet->settings = array(
-    'operator' => 'or',
-    'hard_limit' => '50',
-    'dependencies' => array(
-      'facets' => array(),
-      'force_deactivation' => TRUE,
-      'regex' => FALSE,
-    ),
-    'facet_mincount' => '1',
-    'facet_missing' => '0',
-    'flatten' => '0',
-    'individual_parent' => '0',
-    'query_type' => 'term',
-    'limit_active_items' => 0,
-    'default_true' => '1',
-    'facet_search_ids' => array(),
-    'exclude' => 0,
-    'pretty_paths_alias' => 'field_apart_category',
-    'pretty_paths_taxonomy_pathauto' => 0,
-    'pretty_paths_taxonomy_pathauto_vocabulary' => 'vocabulary_8',
-  );
-  $export['search_api@solr_node_index::field_apart_category'] = $facet;
-
-  $facet = new stdClass();
-  $facet->disabled = FALSE; /* Edit this to true to make a default facet disabled initially */
-  $facet->api_version = 1;
   $facet->name = 'search_api@solr_node_index::field_apart_living_space';
   $facet->searcher = 'search_api@solr_node_index';
   $facet->realm = '';

@@ -48,7 +48,6 @@ function hk_search_default_search_api_index() {
       "index_directly" : 1,
       "cron_limit" : "50",
       "fields" : {
-        "field_apart_kiez_schattenobjekt" : { "type" : "integer", "entity_type" : "node" },
         "field_apart_living_space" : { "type" : "decimal" },
         "field_apart_no" : { "type" : "text" },
         "field_apart_price" : { "type" : "decimal" },
@@ -56,6 +55,8 @@ function hk_search_default_search_api_index() {
         "field_bezirk" : { "type" : "integer", "entity_type" : "taxonomy_term" },
         "field_kategorie" : { "type" : "integer", "entity_type" : "taxonomy_term" },
         "field_obj_schattenobjekt" : { "type" : "string" },
+        "field_object_ref:field_address:locality" : { "type" : "text" },
+        "field_object_ref:field_address:postal_code" : { "type" : "text" },
         "field_object_ref:field_address:thoroughfare" : { "type" : "text" },
         "field_object_ref:field_obj_apartments" : { "type" : "list\\u003Cinteger\\u003E", "entity_type" : "node" },
         "field_object_ref:field_obj_apartments:field_obj_apartments" : {
