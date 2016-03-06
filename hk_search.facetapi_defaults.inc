@@ -262,5 +262,41 @@ function hk_search_facetapi_default_facet_settings() {
   );
   $export['search_api@solr_node_index::field_bezirk'] = $facet;
 
+  $facet = new stdClass();
+  $facet->disabled = FALSE; /* Edit this to true to make a default facet disabled initially */
+  $facet->api_version = 1;
+  $facet->name = 'search_api@solr_node_index::field_kategorie';
+  $facet->searcher = 'search_api@solr_node_index';
+  $facet->realm = '';
+  $facet->facet = 'field_kategorie';
+  $facet->enabled = FALSE;
+  $facet->settings = array(
+    'operator' => 'or',
+    'hard_limit' => '50',
+    'dependencies' => array(
+      'facets' => array(),
+      'reverse_dependency' => FALSE,
+      'force_deactivation' => TRUE,
+      'regex' => FALSE,
+      'roles' => array(),
+      'bundle' => 'none',
+      'bundle_selected' => array(),
+    ),
+    'facet_mincount' => '1',
+    'facet_missing' => '0',
+    'flatten' => '0',
+    'individual_parent' => '0',
+    'query_type' => 'term',
+    'limit_active_items' => 1,
+    'default_true' => '0',
+    'facet_search_ids' => array(
+      'search_api_views:karten:kaufen' => 'search_api_views:karten:kaufen',
+      'search_api_views:karten:map_page' => 'search_api_views:karten:map_page',
+      'search_api_views:karten:mieten' => 'search_api_views:karten:mieten',
+    ),
+    'exclude' => 0,
+  );
+  $export['search_api@solr_node_index::field_kategorie'] = $facet;
+
   return $export;
 }
