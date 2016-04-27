@@ -22,7 +22,6 @@ function hk_search_views_default_views() {
 
   /* Display: Master */
   $handler = $view->new_display('default', 'Master', 'default');
-  $handler->display->display_options['use_ajax'] = TRUE;
   $handler->display->display_options['use_more_always'] = FALSE;
   $handler->display->display_options['access']['type'] = 'perm';
   $handler->display->display_options['cache']['type'] = 'search_api_views_cache';
@@ -46,13 +45,14 @@ function hk_search_views_default_views() {
       'rendered_strip' => 0,
     ),
   );
-  $handler->display->display_options['style_options']['map'] = 'leaflet-mapbox-0';
+  $handler->display->display_options['style_options']['map'] = 'leaflet-mapbox';
   $handler->display->display_options['style_options']['map_height'] = '600';
   $handler->display->display_options['style_options']['ip_geoloc_views_plugin_latitude'] = array(
     'field_objekt_wkt' => 'field_objekt_wkt',
   );
   $handler->display->display_options['style_options']['ip_geoloc_views_plugin_longitude'] = '';
   $handler->display->display_options['style_options']['default_marker']['default_marker_color'] = 'Icon_House2';
+  $handler->display->display_options['style_options']['visitor_marker']['visitor_marker_accuracy_circle'] = 0;
   $handler->display->display_options['style_options']['center_option'] = '0';
   $handler->display->display_options['style_options']['tags']['marker_tag'] = 'field_obj_apartments';
   $handler->display->display_options['style_options']['tags']['tag_css_class'] = 'tag-below-marker';
@@ -64,6 +64,9 @@ function hk_search_views_default_views() {
   $handler->display->display_options['style_options']['scale_metric'] = 1;
   $handler->display->display_options['style_options']['scale_imperial'] = 0;
   $handler->display->display_options['style_options']['zoom_indicator'] = 0;
+  $handler->display->display_options['style_options']['open_balloons_on_click'] = 1;
+  $handler->display->display_options['style_options']['open_balloons_on_hover'] = 0;
+  $handler->display->display_options['style_options']['goto_content_on_click'] = 0;
   $handler->display->display_options['style_options']['map_reset'] = 0;
   $handler->display->display_options['style_options']['map_cluster_toggle'] = 0;
   $handler->display->display_options['style_options']['mini_map']['on'] = 0;
@@ -536,6 +539,7 @@ function hk_search_views_default_views() {
   $handler->display->display_options['defaults']['css_class'] = FALSE;
   $handler->display->display_options['css_class'] = 'kaufen';
   $handler->display->display_options['display_description'] = 'Listensuche, als Page unter /buy /kaufen eingebunden';
+  $handler->display->display_options['defaults']['use_ajax'] = FALSE;
   $handler->display->display_options['defaults']['pager'] = FALSE;
   $handler->display->display_options['pager']['type'] = 'full';
   $handler->display->display_options['pager']['options']['items_per_page'] = '10';
@@ -702,6 +706,7 @@ function hk_search_views_default_views() {
   $handler->display->display_options['defaults']['css_class'] = FALSE;
   $handler->display->display_options['css_class'] = 'kaufen';
   $handler->display->display_options['display_description'] = 'Listensuche, als Page unter /buy /kaufen eingebunden';
+  $handler->display->display_options['defaults']['use_ajax'] = FALSE;
   $handler->display->display_options['defaults']['pager'] = FALSE;
   $handler->display->display_options['pager']['type'] = 'full';
   $handler->display->display_options['pager']['options']['items_per_page'] = '10';

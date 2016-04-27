@@ -44,6 +44,27 @@ function hk_search_strongarm() {
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
+  $strongarm->name = 'leaflet_mapbox_api_version';
+  $strongarm->value = '3';
+  $export['leaflet_mapbox_api_version'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'leaflet_mapbox_style_url';
+  $strongarm->value = '';
+  $export['leaflet_mapbox_style_url'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'leaflet_mapbox_token';
+  $strongarm->value = 'pk.eyJ1IjoiaGVsaW9nYWJhbDIzIiwiYSI6IllaSnN4azQifQ.fR5dKirb7efL6hsZD18AOw';
+  $export['leaflet_mapbox_token'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
   $strongarm->name = 'search_api_ajax_pages';
   $strongarm->value = '<front>
 map
